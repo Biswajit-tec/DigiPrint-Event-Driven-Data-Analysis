@@ -53,11 +53,11 @@ const TrackingScriptGenerator = ({ onSiteRegistered, onStartMonitoring }) => {
     setLoading(true);
 
     try {
-      // Get the current user's ID for owner_id
+      // Get the current user's ID for RLS compliance
       const { data: { user } } = await supabase.auth.getUser();
-      const ownerId = user?.id || null;
+      const userId = user?.id || null;
 
-      // Register site in Supabase with owner_id
+      // Register site in Supabase with user_id (required by RLS policy)
       const { error: insertError } = await supabase
         .from('sites')
         .upsert(
@@ -65,7 +65,7 @@ const TrackingScriptGenerator = ({ onSiteRegistered, onStartMonitoring }) => {
             site_name: extractedDomain,
             domain: extractedDomain,
             is_active: true,
-            owner_id: ownerId,
+            user_id: userId,
           },
           { onConflict: 'domain', ignoreDuplicates: true }
         );

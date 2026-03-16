@@ -11,11 +11,13 @@ const eventTypeColors = {
   session_start: { bg: 'bg-pink-500/20', text: 'text-pink-400', border: 'border-pink-500/30', dot: 'bg-pink-400' },
   session_end: { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30', dot: 'bg-red-400' },
   scroll: { bg: 'bg-indigo-500/20', text: 'text-indigo-400', border: 'border-indigo-500/30', dot: 'bg-indigo-400' },
+  scroll_depth: { bg: 'bg-indigo-500/20', text: 'text-indigo-400', border: 'border-indigo-500/30', dot: 'bg-indigo-400' },
   form_submit: { bg: 'bg-emerald-500/20', text: 'text-emerald-400', border: 'border-emerald-500/30', dot: 'bg-emerald-400' },
   navigation: { bg: 'bg-sky-500/20', text: 'text-sky-400', border: 'border-sky-500/30', dot: 'bg-sky-400' },
   hover: { bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/30', dot: 'bg-amber-400' },
   download: { bg: 'bg-teal-500/20', text: 'text-teal-400', border: 'border-teal-500/30', dot: 'bg-teal-400' },
   external_link_click: { bg: 'bg-rose-500/20', text: 'text-rose-400', border: 'border-rose-500/30', dot: 'bg-rose-400' },
+  rage_click: { bg: 'bg-red-600/20', text: 'text-red-400', border: 'border-red-600/30', dot: 'bg-red-500' },
 };
 
 const defaultColor = { bg: 'bg-gray-500/20', text: 'text-gray-400', border: 'border-gray-500/30', dot: 'bg-gray-400' };
@@ -34,6 +36,11 @@ const eventIcons = {
     </svg>
   ),
   scroll: (
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
+  ),
+  scroll_depth: (
     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
     </svg>
@@ -85,6 +92,11 @@ const eventIcons = {
       <path strokeLinecap="round" strokeLinejoin="round" d="M10 9v6m4-6v6" />
     </svg>
   ),
+  rage_click: (
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+    </svg>
+  ),
   search: (
     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -112,6 +124,8 @@ const getEventDescription = (event) => {
       if (meta.element) return `User clicked a ${meta.element.toLowerCase()} on ${pageName}`;
       return `User clicked an element on ${pageName}`;
     case 'scroll':
+    case 'scroll_depth':
+      if (meta.scroll_percent) return `User scrolled ${meta.scroll_percent}% of ${pageName}`;
       if (meta.depth) return `User scrolled ${meta.depth}% of ${pageName}`;
       return `User scrolled the page`;
     case 'form_submit':
@@ -141,8 +155,12 @@ const getEventDescription = (event) => {
       if (meta.url) return `User clicked external link to ${meta.url}`;
       return `User clicked an external link`;
     case 'api_call':
-      if (meta.endpoint) return `API call to ${meta.endpoint}`;
+      if (meta.endpoint) return `API ${meta.method || 'GET'} call to ${meta.endpoint}`;
       return `API call made`;
+    case 'rage_click':
+      if (meta.text) return `Rage click on "${meta.text}" (${meta.clicks || 3}x)`;
+      if (meta.element) return `Rage click on ${meta.element.toLowerCase()} (${meta.clicks || 3}x)`;
+      return `Rage click detected`;
     default:
       return `${(event.event_type || 'unknown').replace(/_/g, ' ')} event occurred`;
   }

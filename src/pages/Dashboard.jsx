@@ -25,11 +25,13 @@ const eventTypeColors = {
   session_start: 'bg-pink-500/20 text-pink-400 border-pink-500/30',
   session_end: 'bg-red-500/20 text-red-400 border-red-500/30',
   scroll: 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30',
+  scroll_depth: 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30',
   form_submit: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
   navigation: 'bg-sky-500/20 text-sky-400 border-sky-500/30',
   hover: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
   download: 'bg-teal-500/20 text-teal-400 border-teal-500/30',
   external_link_click: 'bg-rose-500/20 text-rose-400 border-rose-500/30',
+  rage_click: 'bg-red-600/20 text-red-400 border-red-600/30',
 };
 
 const formatTime = (ts) => {

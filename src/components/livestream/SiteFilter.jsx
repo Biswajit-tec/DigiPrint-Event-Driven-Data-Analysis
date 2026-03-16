@@ -11,7 +11,7 @@ const eventTypes = [
   'all',
   'page_view',
   'click',
-  'scroll',
+  'scroll_depth',
   'form_submit',
   'navigation',
   'search',
@@ -23,6 +23,7 @@ const eventTypes = [
   'logout',
   'session_start',
   'session_end',
+  'rage_click',
 ];
 
 /**
