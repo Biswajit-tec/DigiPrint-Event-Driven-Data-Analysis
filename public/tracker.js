@@ -73,25 +73,24 @@
 
         siteId = site.id;
 
-        const { data: session } = await supabase
+        sessionId = crypto.randomUUID();
+
+        const { error: sessionError } = await supabase
             .from("sessions")
             .insert({
+                id: sessionId,
                 site_id: siteId,
                 device_info: {
                     browser: navigator.userAgent,
                     os: navigator.platform,
                     screen: `${window.innerWidth}x${window.innerHeight}`,
                 },
-            })
-            .select()
-            .single();
+            });
 
-        if (!session) {
-            console.warn("DigiPrint: failed to create session");
+        if (sessionError) {
+            console.warn("DigiPrint: failed to create session", sessionError);
             return;
         }
-
-        sessionId = session.id;
 
         track("session_start", { page: location.pathname });
         setupTracking();
