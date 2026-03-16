@@ -25,7 +25,14 @@
         "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
     );
 
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        global: {
+            headers: {
+                apikey: SUPABASE_ANON_KEY,
+                Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+            },
+        },
+    });
 
     let siteId = null;
     let sessionId = null;
