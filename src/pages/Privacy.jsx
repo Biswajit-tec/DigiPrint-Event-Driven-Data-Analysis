@@ -31,15 +31,15 @@ const Privacy = () => {
                                 <ul className="list-disc list-inside space-y-1 ml-4">
                                     <li>Event type (login, click, search, etc.)</li>
                                     <li>Timestamp of events</li>
-                                    <li>Session identifiers (UUIDs)</li>
-                                    <li>Anonymized user metadata</li>
+                                    <li>Session and Site identifiers (UUIDs)</li>
+                                    <li>Anonymized browser and device metadata</li>
                                 </ul>
                             </div>
 
                             <div>
                                 <h3 className="font-semibold text-foreground mb-2">What We DON'T Collect:</h3>
                                 <ul className="list-disc list-inside space-y-1 ml-4">
-                                    <li>Raw IP addresses (only hashed)</li>
+                                    <li>Cleartext IP addresses</li>
                                     <li>Personal identifiable information (PII)</li>
                                     <li>Passwords or authentication tokens</li>
                                     <li>Financial or payment data</li>
@@ -49,41 +49,33 @@ const Privacy = () => {
                     </GlassCard>
 
                     <GlassCard>
-                        <h2 className="text-2xl font-semibold mb-4">✅ Consent Management</h2>
+                        <h2 className="text-2xl font-semibold mb-4">✅ Security & Isolation</h2>
                         <div className="space-y-3 text-muted-foreground">
                             <p>
-                                User consent is tracked at the database level via the <code className="bg-muted px-2 py-1 rounded text-primary">consent_status</code> column.
+                                Data isolation is enforced at the database level via <strong>Row Level Security (RLS)</strong>.
                             </p>
                             <p>
-                                <strong>Consent States:</strong>
+                                <strong>Isolation Models:</strong>
                             </p>
                             <ul className="list-disc list-inside space-y-1 ml-4">
-                                <li><span className="text-green-400">Granted:</span> User has explicitly opted in to tracking</li>
-                                <li><span className="text-yellow-400">Pending:</span> Awaiting user decision</li>
-                                <li><span className="text-red-400">Revoked:</span> User has opted out; data anonymized or deleted</li>
+                                <li><span className="text-green-400">User Isolation:</span> Verified users can only access events from their own registered sites.</li>
+                                <li><span className="text-cyan-400">Site Isolation:</span> Tracking is scoped strictly to the site's unique identifier.</li>
+                                <li><span className="text-red-400">Anonymous Access:</span> Restricted strictly to directed event insertion.</li>
                             </ul>
                         </div>
                     </GlassCard>
 
                     <GlassCard>
-                        <h2 className="text-2xl font-semibold mb-4">🧪 Demo vs Live Mode</h2>
+                        <h2 className="text-2xl font-semibold mb-4">🟢 operational Mode</h2>
                         <div className="space-y-3 text-muted-foreground">
                             <p>
-                                This platform supports two operational modes:
+                                This platform operates in a <strong>Live Database Mode</strong> powered by Supabase:
                             </p>
-                            <div className="grid md:grid-cols-2 gap-4 mt-4">
-                                <div className="p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
-                                    <h4 className="font-semibold text-blue-400 mb-2">🔵 Demo Mode</h4>
-                                    <p className="text-sm">
-                                        Uses <strong>synthetic, privacy-safe data</strong> generated locally. No real user information is involved.
-                                    </p>
-                                </div>
-                                <div className="p-4 bg-green-500/10 border border-green-500/30 rounded-lg">
-                                    <h4 className="font-semibold text-green-400 mb-2">🟢 Live Mode</h4>
-                                    <p className="text-sm">
-                                        Connects to real database with <strong>consent-based tracking</strong>. All users must explicitly opt-in.
-                                    </p>
-                                </div>
+                            <div className="p-4 bg-green-500/10 border border-green-500/30 rounded-lg mt-4">
+                                <h4 className="font-semibold text-green-400 mb-2">Supabase Managed Backend</h4>
+                                <p className="text-sm">
+                                    All data is stored in a secure, encrypted PostgreSQL database. Access is controlled via JWT-based authentication and database-level policies.
+                                </p>
                             </div>
                         </div>
                     </GlassCard>
@@ -96,28 +88,14 @@ const Privacy = () => {
                             </p>
                             <ul className="list-disc list-inside space-y-1 ml-4">
                                 <li>Database Management Systems (DBMS) concepts</li>
-                                <li>Event-driven architecture patterns</li>
+                                <li>Cloud-native architecture patterns (Supabase)</li>
                                 <li>Real-time data processing</li>
                                 <li>Full-stack development skills</li>
                                 <li>Privacy-conscious design</li>
                             </ul>
                             <p className="mt-4">
-                                <strong>No production user data</strong> is used. All demonstrations use synthetic or anonymized data sets.
+                                <strong>No production user data</strong> is used. All demonstrations use synthetic or non-PII data sets.
                             </p>
-                        </div>
-                    </GlassCard>
-
-                    <GlassCard>
-                        <h2 className="text-2xl font-semibold mb-4">📜 Data Retention</h2>
-                        <div className="space-y-3 text-muted-foreground">
-                            <p>
-                                Event data is retained for analytical purposes with the following policies:
-                            </p>
-                            <ul className="list-disc list-inside space-y-1 ml-4">
-                                <li><strong>Active events:</strong> Indexed for 30 days (partial index)</li>
-                                <li><strong>Historical events:</strong> Archived after 90 days (conceptual archiving strategy documented)</li>
-                                <li><strong>User deletion requests:</strong> Immediate anonymization or deletion upon request</li>
-                            </ul>
                         </div>
                     </GlassCard>
 
@@ -125,11 +103,10 @@ const Privacy = () => {
                         <h2 className="text-2xl font-semibold mb-4">🛡️ Security Measures</h2>
                         <div className="space-y-2 text-muted-foreground">
                             <ul className="list-disc list-inside space-y-1 ml-4">
-                                <li>IP addresses are <strong>hashed using SHA-256</strong> before storage</li>
                                 <li>Database connections use <strong>SSL/TLS encryption</strong></li>
-                                <li>SQL queries are <strong>parameterized</strong> to prevent injection attacks</li>
-                                <li>Query Playground uses <strong>whitelisted, read-only queries</strong> only</li>
-                                <li>No arbitrary SQL execution permitted</li>
+                                <li>Supabase <strong>Auth & RLS</strong> provides enterprise-grade access control</li>
+                                <li>SQL queries are <strong>parameterized/managed</strong> by the Supabase client</li>
+                                <li>Public analytical views expose only <strong>aggregated/anonymized</strong> metrics</li>
                             </ul>
                         </div>
                     </GlassCard>

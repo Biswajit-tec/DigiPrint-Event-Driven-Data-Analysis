@@ -29,54 +29,37 @@ const ArchitectureViz = () => {
 │  └──────┬──────┘  └──────────────┘  └─────────────────────┘   │
 └─────────┼───────────────────────────────────────────────────────┘
           │
-          │ HTTP + WebSocket
+          │ HTTPS + WebSocket (PostgreSQL Realtime)
           ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                         API LAYER                                │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │              Express.js Server                           │   │
-│  │    ┌──────────┐  ┌──────────┐  ┌──────────────────┐    │   │
-│  │    │  Event   │  │Analytics │  │  Query           │    │   │
-│  │    │  Routes  │  │  Routes  │  │  Routes          │    │   │
-│  │    └────┬─────┘  └────┬─────┘  └────┬─────────────┘    │   │
-│  └─────────┼─────────────┼─────────────┼──────────────────┘   │
-└────────────┼─────────────┼─────────────┼──────────────────────┘
-             │             │             │
-             ▼             ▼             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      SERVICE LAYER                               │
-│  ┌──────────────────┐  ┌────────────────────────────────────┐  │
-│  │  Event Service   │  │     Analytics Service              │  │
-│  │  - Ingest events │  │  - Dashboard summaries             │  │
-│  │  - Broadcast via │  │  - Peak time analysis              │  │
-│  │    Socket.IO     │  │  - Anomaly detection (z-score)     │  │
-│  │  - Session mgmt  │  │  - Risk scoring                    │  │
-│  └────────┬─────────┘  └──────────┬─────────────────────────┘  │
-└───────────┼────────────────────────┼─────────────────────────────┘
-            │                        │
-            │  PostgreSQL Driver (pg)│
-            ▼                        ▼
+│                      SUPABASE PLATFORM                           │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌────────────────┐  │
+│  │   Supabase Auth  │  │ Supabase Storage │  │ Supabase Edge  │  │
+│  │  - User Mgmt     │  │  - Static Assets │  │    Functions   │  │
+│  │  - RLS Policies  │  │                  │  │ (Conceptual)   │  │
+│  └────────┬─────────┘  └──────────────────┘  └────────┬───────┘  │
+└───────────┼───────────────────────────────────────────┼──────────┘
+            │                                           │
+            ▼                                           ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                    DATABASE LAYER (PostgreSQL)                   │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────┐  │
 │  │    Tables    │  │   Triggers   │  │     Views            │  │
-│  │  - users     │  │  - Auto-end  │  │  - v_event_frequency │  │
-│  │  - sessions  │  │    sessions  │  │  - v_peak_activity   │  │
-│  │  - events    │  │  - Validate  │  │  - v_anomalies       │  │
-│  │              │  │    events    │  │  - v_risk_scores     │  │
+│  │  - sites     │  │  - Timestamp │  │  - v_events_over_time│  │
+│  │  - sessions  │  │    tracking  │  │  - v_event_dist      │  │
+│  │  - events    │  │              │  │  - v_top_pages       │  │
 │  └──────────────┘  └──────────────┘  └──────────────────────┘  │
 │  ┌──────────────┐  ┌────────────────────────────────────────┐  │
-│  │   Indexes    │  │    Stored Procedures                   │  │
-│  │  - timestamp │  │  - get_user_analytics(user_id)         │  │
-│  │  - session   │  │  - get_event_timeline(start, end)      │  │
-│  │  - type      │  │  - detect_anomalies(threshold)         │  │
+│  │   Indexes    │  │       Row Level Security (RLS)         │  │
+│  │  - site_id   │  │  - user_id isolation                   │  │
+│  │  - timestamp │  │  - Anonymous tracker insertion         │  │
 │  └──────────────┘  └────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────┐
-│                   REAL-TIME LAYER (Socket.IO)                    │
-│   Client ◄──────► Server ◄──────► Broadcast to all clients     │
-│   New events pushed instantly without polling                    │
+│                   REAL-TIME LAYER (Realtime)                     │
+│   Supabase Realtime ◄──────► PostgreSQL WAL ◄──────► Clients    │
+│   Database changes broadcast instantly via WebSocket              │
 └─────────────────────────────────────────────────────────────────┘
 `}</pre>
                     </div>
@@ -88,19 +71,19 @@ const ArchitectureViz = () => {
                         <ul className="space-y-2 text-sm text-muted-foreground">
                             <li className="flex items-start gap-2">
                                 <span className="text-primary">▸</span>
-                                <span><strong>Event Ingestion:</strong> POST /api/events with Socket.IO broadcast</span>
+                                <span><strong>Supabase Client:</strong> Direct interaction from frontend to backend services</span>
                             </li>
                             <li className="flex items-start gap-2">
                                 <span className="text-primary">▸</span>
-                                <span><strong>Real-Time Stream:</strong> WebSocket connection for live updates</span>
+                                <span><strong>Real-time Channels:</strong> Listening for insert/update events on PostgreSQL tables</span>
                             </li>
                             <li className="flex items-start gap-2">
                                 <span className="text-primary">▸</span>
-                                <span><strong>Analytics Engine:</strong> SQL views + stored procedures</span>
+                                <span><strong>Row Level Security:</strong> High-granularity access control at the database level</span>
                             </li>
                             <li className="flex items-start gap-2">
                                 <span className="text-primary">▸</span>
-                                <span><strong>Anomaly Detection:</strong> Z-score statistical analysis</span>
+                                <span><strong>Analytical Views:</strong> Complex SQL aggregations exposed as queryable relations</span>
                             </li>
                         </ul>
                     </GlassCard>
@@ -108,12 +91,12 @@ const ArchitectureViz = () => {
                     <GlassCard>
                         <h3 className="text-xl font-semibold mb-4">Data Flow</h3>
                         <ol className="space-y-2 text-sm text-muted-foreground list-decimal list-inside">
-                            <li>Client sends event to API</li>
-                            <li>Event Service validates & stores in DB</li>
-                            <li>Database trigger auto-updates session</li>
-                            <li>Event Service broadcasts via Socket.IO</li>
-                            <li>All connected clients receive update</li>
-                            <li>Analytics views refresh on next query</li>
+                            <li>Tracker script sends event data to Supabase</li>
+                            <li>Supabase Auth verifies session/origin context</li>
+                            <li>PostgreSQL stores event and triggers Realtime broadcast</li>
+                            <li>Client-side Supabase SDK receives WAL update</li>
+                            <li>UI state updates reactively with Framer Motion</li>
+                            <li>Analytics dashboards query optimized SQL views</li>
                         </ol>
                     </GlassCard>
                 </div>

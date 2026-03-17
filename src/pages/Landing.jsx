@@ -101,8 +101,8 @@ const Landing = () => {
                                 {[
                                     {
                                         icon: '⚡',
-                                        title: 'Real-Time Events',
-                                        description: 'Socket.IO powered live event streaming with instant analytics updates',
+                                        title: 'Real-Time Tracking',
+                                        description: 'Supabase Realtime event streaming with sub-second latency updates',
                                     },
                                     {
                                         icon: '📊',
@@ -116,8 +116,8 @@ const Landing = () => {
                                     },
                                     {
                                         icon: '🎯',
-                                        title: 'Database Triggers',
-                                        description: 'Auto-update sessions, validate events, and track user activity',
+                                        title: 'Cloud Infrastructure',
+                                        description: 'Serverless PostgreSQL with RLS, Auth, and automated API generation',
                                     },
                                     {
                                         icon: '🔍',
@@ -159,7 +159,7 @@ const Landing = () => {
                         >
                             <h2 className="text-3xl font-bold mb-4">Built With</h2>
                             <div className="flex flex-wrap justify-center gap-4 mt-8">
-                                {['PostgreSQL', 'Node.js', 'Express', 'Socket.IO', 'React', 'Tailwind CSS', 'Framer Motion'].map(
+                                {['PostgreSQL', 'Supabase Auth', 'Supabase Realtime', 'PostgREST', 'React', 'Tailwind CSS', 'Framer Motion'].map(
                                     (tech) => (
                                         <span
                                             key={tech}
