@@ -34,8 +34,8 @@ const ModeToggle = () => {
             <motion.button
                 onClick={() => setIsLiveMode(false)}
                 className={`px-4 py-2 rounded-md font-medium transition-all duration-200 ${!isLiveMode
-                        ? 'bg-cyber-500 text-dark-950 shadow-glow'
-                        : 'text-gray-400 hover:text-white'
+                        ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20'
+                        : 'text-muted-foreground hover:text-foreground'
                     }`}
                 whileTap={{ scale: 0.95 }}
             >
@@ -44,8 +44,8 @@ const ModeToggle = () => {
             <motion.button
                 onClick={() => setIsLiveMode(true)}
                 className={`px-4 py-2 rounded-md font-medium transition-all duration-200 ${isLiveMode
-                        ? 'bg-green-500 text-white shadow-[0_0_20px_rgba(34,197,94,0.4)]'
-                        : 'text-gray-400 hover:text-white'
+                        ? 'bg-green-500 text-foreground shadow-[0_0_20px_rgba(34,197,94,0.4)]'
+                        : 'text-muted-foreground hover:text-foreground'
                     }`}
                 whileTap={{ scale: 0.95 }}
             >

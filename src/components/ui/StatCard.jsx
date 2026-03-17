@@ -31,7 +31,7 @@ const StatCard = ({
         };
     }, [value, delay, springValue]);
 
-    const trendColor = trend > 0 ? 'text-green-400' : trend < 0 ? 'text-red-400' : 'text-gray-400';
+    const trendColor = trend > 0 ? 'text-green-400' : trend < 0 ? 'text-red-400' : 'text-muted-foreground';
 
     return (
         <motion.div
@@ -44,9 +44,9 @@ const StatCard = ({
         >
             <div className="flex items-start justify-between">
                 <div className="flex-1">
-                    <p className="text-gray-400 text-sm font-medium mb-1">{title}</p>
+                    <p className="text-muted-foreground text-sm font-medium mb-1">{title}</p>
                     <div className="flex items-baseline gap-2">
-                        <h3 className="text-3xl font-bold text-white stat-count-up">
+                        <h3 className="text-3xl font-bold text-foreground stat-count-up">
                             {prefix}{displayValue.toLocaleString()}{suffix}
                         </h3>
                         {trend !== undefined && trend !== 0 && (
@@ -57,8 +57,8 @@ const StatCard = ({
                     </div>
                 </div>
                 {Icon && (
-                    <div className="p-3 bg-cyber-500/10 rounded-lg">
-                        <Icon className="w-6 h-6 text-cyber-400" />
+                    <div className="p-3 bg-primary/10 rounded-lg">
+                        <Icon className="w-6 h-6 text-primary" />
                     </div>
                 )}
             </div>

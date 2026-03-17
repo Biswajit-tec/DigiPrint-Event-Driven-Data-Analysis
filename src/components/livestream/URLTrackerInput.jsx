@@ -47,14 +47,14 @@ const URLTrackerInput = ({ onTrack, currentDomain }) => {
 
   return (
     <motion.div
-      className="glass-strong rounded-xl p-5 border border-white/10"
+      className="glass-strong rounded-xl p-5 border border-border"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
       <div className="flex items-center gap-3 mb-3">
         <span className="text-lg">🔍</span>
-        <h3 className="text-lg font-semibold text-white">Track Website URL</h3>
+        <h3 className="text-lg font-semibold text-foreground">Track Website URL</h3>
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
@@ -64,7 +64,7 @@ const URLTrackerInput = ({ onTrack, currentDomain }) => {
             value={url}
             onChange={(e) => { setUrl(e.target.value); setError(''); }}
             placeholder="https://example.com"
-            className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyber-500/50 focus:ring-1 focus:ring-cyber-500/30 transition-all font-mono text-sm"
+            className="w-full px-4 py-2.5 bg-muted border border-border rounded-lg text-foreground placeholder-gray-500 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all font-mono text-sm"
           />
           {error && <p className="text-red-400 text-xs mt-1 absolute">{error}</p>}
         </div>
@@ -72,7 +72,7 @@ const URLTrackerInput = ({ onTrack, currentDomain }) => {
         <div className="flex gap-2">
           <button
             type="submit"
-            className="px-5 py-2.5 bg-cyber-500 text-dark-950 font-medium rounded-lg hover:bg-cyber-400 hover:shadow-glow transition-all duration-200 active:scale-95 text-sm whitespace-nowrap"
+            className="px-5 py-2.5 bg-primary text-primary-foreground font-medium rounded-lg hover:bg-primary/90 hover:shadow-lg shadow-primary/20 transition-all duration-200 active:scale-95 text-sm whitespace-nowrap"
           >
             Start Monitoring
           </button>
@@ -80,7 +80,7 @@ const URLTrackerInput = ({ onTrack, currentDomain }) => {
             <button
               type="button"
               onClick={handleClear}
-              className="px-4 py-2.5 glass text-gray-300 rounded-lg hover:bg-white/10 transition-all text-sm"
+              className="px-4 py-2.5 glass text-muted-foreground rounded-lg hover:bg-white/10 transition-all text-sm"
             >
               Clear
             </button>

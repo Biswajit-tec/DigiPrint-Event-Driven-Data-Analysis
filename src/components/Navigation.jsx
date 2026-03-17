@@ -43,15 +43,15 @@ const Navigation = () => {
     };
 
     return (
-        <nav className="sticky top-0 z-50 glass-strong border-b border-white/10">
+        <nav className="sticky top-0 z-50 glass-strong border-b border-border">
             <div className="container mx-auto px-6">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-2.5 shrink-0">
-                        <div className="w-8 h-8 bg-cyber-500 rounded-lg flex items-center justify-center">
-                            <span className="text-dark-950 font-bold text-xl">D</span>
+                        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                            <span className="text-primary-foreground font-bold text-xl">D</span>
                         </div>
-                        <span className="text-xl font-bold bg-gradient-to-r from-cyber-400 to-purple-400 bg-clip-text text-transparent">
+                        <span className="text-xl font-bold text-foreground">
                             DigiPrint
                         </span>
                     </Link>
@@ -62,8 +62,8 @@ const Navigation = () => {
                             <Link key={item.path} to={item.path}>
                                 <motion.div
                                     className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${isActive(item.path)
-                                            ? 'bg-cyber-500/20 text-cyber-400 border border-cyber-500/50'
-                                            : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                            ? 'bg-transparent border border-foreground text-foreground shadow-sm'
+                                            : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                                         }`}
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
@@ -78,7 +78,7 @@ const Navigation = () => {
                     <div className="hidden lg:flex items-center gap-3">
                         {user && (
                             <div className="flex items-center gap-3">
-                                <span className="text-sm text-gray-400 truncate max-w-[180px]" title={user.email}>
+                                <span className="text-sm text-muted-foreground truncate max-w-[180px]" title={user.email}>
                                     {user.email}
                                 </span>
                                 <button
@@ -92,7 +92,7 @@ const Navigation = () => {
                         {!user && (
                             <Link
                                 to="/login"
-                                className="px-4 py-1.5 rounded-lg text-sm font-medium bg-cyber-500/20 text-cyber-400 border border-cyber-500/50 hover:bg-cyber-500/30 transition-all"
+                                className="px-4 py-1.5 rounded-lg text-sm font-medium bg-primary/20 text-primary border border-primary/50 hover:bg-primary/30 transition-all"
                             >
                                 Login
                             </Link>
@@ -145,18 +145,18 @@ const Navigation = () => {
                             >
                                 <div
                                     className={`px-4 py-3 rounded-lg text-sm font-medium ${isActive(item.path)
-                                            ? 'bg-cyber-500/20 text-cyber-400'
-                                            : 'text-gray-400 hover:bg-white/5'
+                                            ? 'bg-transparent border border-foreground text-foreground'
+                                            : 'text-muted-foreground hover:bg-muted'
                                         }`}
                                 >
                                     {item.label}
                                 </div>
                             </Link>
                         ))}
-                        <div className="pt-3 border-t border-white/10">
+                        <div className="pt-3 border-t border-border">
                             {user && (
                                 <div className="flex items-center justify-between px-4 py-2">
-                                    <span className="text-sm text-gray-400 truncate max-w-[200px]">
+                                    <span className="text-sm text-muted-foreground truncate max-w-[200px]">
                                         {user.email}
                                     </span>
                                     <button
@@ -171,7 +171,7 @@ const Navigation = () => {
                                 <Link
                                     to="/login"
                                     onClick={() => setIsOpen(false)}
-                                    className="block mx-4 text-center px-4 py-2 rounded-lg text-sm font-medium bg-cyber-500/20 text-cyber-400 border border-cyber-500/50"
+                                    className="block mx-4 text-center px-4 py-2 rounded-lg text-sm font-medium bg-primary/20 text-primary border border-primary/50"
                                 >
                                     Login
                                 </Link>

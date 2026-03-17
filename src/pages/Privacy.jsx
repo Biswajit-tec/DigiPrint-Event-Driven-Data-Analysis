@@ -14,20 +14,20 @@ const Privacy = () => {
             <div className="container mx-auto px-6 max-w-4xl">
                 <div className="mb-8">
                     <h1 className="text-4xl font-bold mb-2">Privacy & Ethics</h1>
-                    <p className="text-gray-400">Our commitment to data protection and ethical practices</p>
+                    <p className="text-muted-foreground">Our commitment to data protection and ethical practices</p>
                 </div>
 
                 <div className="space-y-6">
                     <GlassCard>
                         <h2 className="text-2xl font-semibold mb-4">🔒 Data Privacy Principles</h2>
-                        <div className="space-y-4 text-gray-300">
+                        <div className="space-y-4 text-muted-foreground">
                             <p>
                                 DigiPrint is built with <strong>privacy-first</strong> principles. All event data is handled
                                 with the utmost care and follows industry best practices.
                             </p>
 
                             <div>
-                                <h3 className="font-semibold text-white mb-2">What We Collect:</h3>
+                                <h3 className="font-semibold text-foreground mb-2">What We Collect:</h3>
                                 <ul className="list-disc list-inside space-y-1 ml-4">
                                     <li>Event type (login, click, search, etc.)</li>
                                     <li>Timestamp of events</li>
@@ -37,7 +37,7 @@ const Privacy = () => {
                             </div>
 
                             <div>
-                                <h3 className="font-semibold text-white mb-2">What We DON'T Collect:</h3>
+                                <h3 className="font-semibold text-foreground mb-2">What We DON'T Collect:</h3>
                                 <ul className="list-disc list-inside space-y-1 ml-4">
                                     <li>Raw IP addresses (only hashed)</li>
                                     <li>Personal identifiable information (PII)</li>
@@ -50,9 +50,9 @@ const Privacy = () => {
 
                     <GlassCard>
                         <h2 className="text-2xl font-semibold mb-4">✅ Consent Management</h2>
-                        <div className="space-y-3 text-gray-300">
+                        <div className="space-y-3 text-muted-foreground">
                             <p>
-                                User consent is tracked at the database level via the <code className="bg-dark-800 px-2 py-1 rounded text-cyber-400">consent_status</code> column.
+                                User consent is tracked at the database level via the <code className="bg-muted px-2 py-1 rounded text-primary">consent_status</code> column.
                             </p>
                             <p>
                                 <strong>Consent States:</strong>
@@ -67,7 +67,7 @@ const Privacy = () => {
 
                     <GlassCard>
                         <h2 className="text-2xl font-semibold mb-4">🧪 Demo vs Live Mode</h2>
-                        <div className="space-y-3 text-gray-300">
+                        <div className="space-y-3 text-muted-foreground">
                             <p>
                                 This platform supports two operational modes:
                             </p>
@@ -90,7 +90,7 @@ const Privacy = () => {
 
                     <GlassCard>
                         <h2 className="text-2xl font-semibold mb-4">🎓 Academic Context</h2>
-                        <div className="space-y-3 text-gray-300">
+                        <div className="space-y-3 text-muted-foreground">
                             <p>
                                 This project is designed for <strong>educational and portfolio purposes</strong> to demonstrate:
                             </p>
@@ -109,7 +109,7 @@ const Privacy = () => {
 
                     <GlassCard>
                         <h2 className="text-2xl font-semibold mb-4">📜 Data Retention</h2>
-                        <div className="space-y-3 text-gray-300">
+                        <div className="space-y-3 text-muted-foreground">
                             <p>
                                 Event data is retained for analytical purposes with the following policies:
                             </p>
@@ -123,7 +123,7 @@ const Privacy = () => {
 
                     <GlassCard>
                         <h2 className="text-2xl font-semibold mb-4">🛡️ Security Measures</h2>
-                        <div className="space-y-2 text-gray-300">
+                        <div className="space-y-2 text-muted-foreground">
                             <ul className="list-disc list-inside space-y-1 ml-4">
                                 <li>IP addresses are <strong>hashed using SHA-256</strong> before storage</li>
                                 <li>Database connections use <strong>SSL/TLS encryption</strong></li>
@@ -134,11 +134,11 @@ const Privacy = () => {
                         </div>
                     </GlassCard>
 
-                    <div className="mt-12 p-6 bg-gradient-to-r from-cyber-600/10 via-purple-600/10 to-cyber-600/10 rounded-xl text-center">
-                        <p className="text-gray-400 mb-4">
+                    <div className="mt-12 p-6 bg-gradient-to-r from-primary/20 via-secondary/10 to-primary/5 rounded-xl text-center">
+                        <p className="text-muted-foreground mb-4">
                             Questions or concerns about data privacy?
                         </p>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-muted-foreground">
                             This is a demonstration project. For real-world deployment, consult with legal and compliance teams
                             to ensure GDPR, CCPA, and other regulatory compliance.
                         </p>

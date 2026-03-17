@@ -6,11 +6,11 @@ const COLORS = ['#00bfff', '#8b5cf6', '#22c55e', '#f59e0b', '#ec4899', '#06b6d4'
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="glass-strong rounded-lg p-3 border border-white/10 text-sm">
-      <p className="text-white font-medium mb-1">{label}</p>
-      <p className="text-cyber-400">{payload[0].value.toLocaleString()} events</p>
+    <div className="glass-strong rounded-lg p-3 border border-border text-sm">
+      <p className="text-foreground font-medium mb-1">{label}</p>
+      <p className="text-primary">{payload[0].value.toLocaleString()} events</p>
       {payload[0].payload.total_sessions !== undefined && (
-        <p className="text-purple-400">{payload[0].payload.total_sessions.toLocaleString()} sessions</p>
+        <p className="text-secondary-foreground">{payload[0].payload.total_sessions.toLocaleString()} sessions</p>
       )}
     </div>
   );
@@ -23,7 +23,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 const SiteAnalyticsChart = ({ data = [] }) => {
   if (!data.length) {
     return (
-      <div className="flex items-center justify-center h-64 text-gray-500">
+      <div className="flex items-center justify-center h-64 text-muted-foreground">
         No site analytics data available
       </div>
     );

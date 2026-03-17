@@ -15,14 +15,14 @@ const CaseStudy = () => {
             <div className="container mx-auto px-6 max-w-5xl">
                 <div className="mb-8">
                     <h1 className="text-4xl font-bold mb-2">Case Study & Documentation</h1>
-                    <p className="text-gray-400">Technical approach, architecture, and design decisions</p>
+                    <p className="text-muted-foreground">Technical approach, architecture, and design decisions</p>
                 </div>
 
                 <div className="space-y-8">
                     {/* Project Overview */}
                     <GlassCard>
                         <h2 className="text-3xl font-semibold mb-4">📊 Project Overview</h2>
-                        <div className="space-y-4 text-gray-300">
+                        <div className="space-y-4 text-muted-foreground">
                             <p className="text-lg">
                                 <strong>DigiPrint</strong> is an event-driven digital footprint intelligence platform that demonstrates
                                 advanced database management concepts paired with a modern, real-time analytics interface.
@@ -34,7 +34,7 @@ const CaseStudy = () => {
 
                             <div className="grid md:grid-cols-2 gap-6 mt-6">
                                 <div>
-                                    <h4 className="font-semibold text-white mb-2">🎯 Core Objectives</h4>
+                                    <h4 className="font-semibold text-foreground mb-2">🎯 Core Objectives</h4>
                                     <ul className="list-disc list-inside space-y-1 text-sm">
                                         <li>Demonstrate 3NF database design</li>
                                         <li>Implement triggers, views, stored procedures</li>
@@ -43,7 +43,7 @@ const CaseStudy = () => {
                                     </ul>
                                 </div>
                                 <div>
-                                    <h4 className="font-semibold text-white mb-2">💡 Key Features</h4>
+                                    <h4 className="font-semibold text-foreground mb-2">💡 Key Features</h4>
                                     <ul className="list-disc list-inside space-y-1 text-sm">
                                         <li>Socket.IO powered real-time updates</li>
                                         <li>Z-score based anomaly detection</li>
@@ -59,11 +59,11 @@ const CaseStudy = () => {
                     <GlassCard>
                         <h2 className="text-3xl font-semibold mb-6">🗄️ Database Design</h2>
 
-                        <div className="space-y-6 text-gray-300">
+                        <div className="space-y-6 text-muted-foreground">
                             <div>
-                                <h3 className="text-xl font-semibold text-white mb-3">ER Diagram & Cardinalities</h3>
-                                <div className="bg-dark-900 p-6 rounded-lg font-mono text-sm overflow-x-auto">
-                                    <pre className="text-gray-300">
+                                <h3 className="text-xl font-semibold text-foreground mb-3">ER Diagram & Cardinalities</h3>
+                                <div className="bg-card p-6 rounded-lg font-mono text-sm overflow-x-auto">
+                                    <pre className="text-muted-foreground">
                                         {`┌─────────────┐       ┌──────────────┐       ┌─────────────┐
 │   USERS     │       │   SESSIONS   │       │   EVENTS    │
 ├─────────────┤       ├──────────────┤       ├─────────────┤
@@ -85,33 +85,33 @@ Cardinalities:
                             </div>
 
                             <div>
-                                <h3 className="text-xl font-semibold text-white mb-3">ER → Relational Mapping</h3>
+                                <h3 className="text-xl font-semibold text-foreground mb-3">ER → Relational Mapping</h3>
                                 <div className="overflow-x-auto">
                                     <table className="w-full text-sm">
                                         <thead>
                                             <tr className="border-b border-white/20">
-                                                <th className="text-left py-2 px-3 text-gray-400">Entity/Relationship</th>
-                                                <th className="text-left py-2 px-3 text-gray-400">Relational Implementation</th>
-                                                <th className="text-left py-2 px-3 text-gray-400">Keys</th>
+                                                <th className="text-left py-2 px-3 text-muted-foreground">Entity/Relationship</th>
+                                                <th className="text-left py-2 px-3 text-muted-foreground">Relational Implementation</th>
+                                                <th className="text-left py-2 px-3 text-muted-foreground">Keys</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr className="border-b border-white/10">
+                                            <tr className="border-b border-border">
                                                 <td className="py-2 px-3">Users Entity</td>
-                                                <td className="py-2 px-3 font-mono text-cyber-400">users</td>
+                                                <td className="py-2 px-3 font-mono text-primary">users</td>
                                                 <td className="py-2 px-3">PK: id (SERIAL)</td>
                                             </tr>
-                                            <tr className="border-b border-white/10">
+                                            <tr className="border-b border-border">
                                                 <td className="py-2 px-3">Sessions Entity</td>
-                                                <td className="py-2 px-3 font-mono text-cyber-400">sessions</td>
+                                                <td className="py-2 px-3 font-mono text-primary">sessions</td>
                                                 <td className="py-2 px-3">PK: id (UUID), FK: user_id → users(id)</td>
                                             </tr>
-                                            <tr className="border-b border-white/10">
+                                            <tr className="border-b border-border">
                                                 <td className="py-2 px-3">Events Entity</td>
-                                                <td className="py-2 px-3 font-mono text-cyber-400">events</td>
+                                                <td className="py-2 px-3 font-mono text-primary">events</td>
                                                 <td className="py-2 px-3">PK: id (BIGSERIAL), FK: session_id → sessions(id)</td>
                                             </tr>
-                                            <tr className="border-b border-white/10">
+                                            <tr className="border-b border-border">
                                                 <td className="py-2 px-3">Creates (User-Session)</td>
                                                 <td className="py-2 px-3">Foreign key in sessions table</td>
                                                 <td className="py-2 px-3">1:N relationship</td>
@@ -127,7 +127,7 @@ Cardinalities:
                             </div>
 
                             <div>
-                                <h3 className="text-xl font-semibold text-white mb-3">3NF Compliance</h3>
+                                <h3 className="text-xl font-semibold text-foreground mb-3">3NF Compliance</h3>
                                 <p className="mb-3">The schema satisfies Third Normal Form (3NF):</p>
                                 <ul className="list-disc list-inside space-y-2 ml-4">
                                     <li><strong>1NF:</strong> All attributes contain atomic values (no multi-valued attributes)</li>
@@ -160,7 +160,7 @@ Cardinalities:
                     <GlassCard>
                         <h2 className="text-3xl font-semibold mb-4">⚡ Performance & Indexing</h2>
 
-                        <div className="space-y-4 text-gray-300">
+                        <div className="space-y-4 text-muted-foreground">
                             <p>
                                 Strategic indexes improve query performance for time-series analytics:
                             </p>
@@ -169,34 +169,34 @@ Cardinalities:
                                 <table className="w-full text-sm">
                                     <thead>
                                         <tr className="border-b border-white/20">
-                                            <th className="text-left py-2 px-3 text-gray-400">Index</th>
-                                            <th className="text-left py-2 px-3 text-gray-400">Purpose</th>
-                                            <th className="text-left py-2 px-3 text-gray-400">Impact</th>
+                                            <th className="text-left py-2 px-3 text-muted-foreground">Index</th>
+                                            <th className="text-left py-2 px-3 text-muted-foreground">Purpose</th>
+                                            <th className="text-left py-2 px-3 text-muted-foreground">Impact</th>
                                         </tr>
                                     </thead>
                                     <tbody className="font-mono text-xs">
-                                        <tr className="border-b border-white/10">
-                                            <td className="py-2 px-3 text-cyber-400">events(timestamp)</td>
+                                        <tr className="border-b border-border">
+                                            <td className="py-2 px-3 text-primary">events(timestamp)</td>
                                             <td className="py-2 px-3">Time-range queries</td>
                                             <td className="py-2 px-3 text-green-400">O(log n) vs O(n)</td>
                                         </tr>
-                                        <tr className="border-b border-white/10">
-                                            <td className="py-2 px-3 text-cyber-400">events(session_id, timestamp)</td>
+                                        <tr className="border-b border-border">
+                                            <td className="py-2 px-3 text-primary">events(session_id, timestamp)</td>
                                             <td className="py-2 px-3">Session timeline queries</td>
                                             <td className="py-2 px-3 text-green-400">Composite speedup</td>
                                         </tr>
-                                        <tr className="border-b border-white/10">
-                                            <td className="py-2 px-3 text-cyber-400">events(event_type)</td>
+                                        <tr className="border-b border-border">
+                                            <td className="py-2 px-3 text-primary">events(event_type)</td>
                                             <td className="py-2 px-3">Event type filtering</td>
                                             <td className="py-2 px-3 text-green-400">Category queries</td>
                                         </tr>
-                                        <tr className="border-b border-white/10">
-                                            <td className="py-2 px-3 text-cyber-400">sessions(user_id)</td>
+                                        <tr className="border-b border-border">
+                                            <td className="py-2 px-3 text-primary">sessions(user_id)</td>
                                             <td className="py-2 px-3">User session lookup</td>
                                             <td className="py-2 px-3 text-green-400">Join optimization</td>
                                         </tr>
                                         <tr>
-                                            <td className="py-2 px-3 text-purple-400">Partial: recent events</td>
+                                            <td className="py-2 px-3 text-secondary-foreground">Partial: recent events</td>
                                             <td className="py-2 px-3">30-day hot data</td>
                                             <td className="py-2 px-3 text-green-400">Reduced index size</td>
                                         </tr>
@@ -205,10 +205,10 @@ Cardinalities:
                             </div>
 
                             <div>
-                                <h4 className="font-semibold text-white mb-2">Pagination Strategy</h4>
+                                <h4 className="font-semibold text-foreground mb-2">Pagination Strategy</h4>
                                 <p className="text-sm">
-                                    Time-series queries use <code className="bg-dark-800 px-2 py-1 rounded text-cyber-400">LIMIT</code> and{' '}
-                                    <code className="bg-dark-800 px-2 py-1 rounded text-cyber-400">OFFSET</code> with timestamp-based cursor pagination
+                                    Time-series queries use <code className="bg-muted px-2 py-1 rounded text-primary">LIMIT</code> and{' '}
+                                    <code className="bg-muted px-2 py-1 rounded text-primary">OFFSET</code> with timestamp-based cursor pagination
                                     for efficient large dataset retrieval.
                                 </p>
                             </div>
@@ -219,7 +219,7 @@ Cardinalities:
                     <GlassCard>
                         <h2 className="text-3xl font-semibold mb-4">🤖 Machine Learning Scope</h2>
 
-                        <div className="space-y-3 text-gray-300">
+                        <div className="space-y-3 text-muted-foreground">
                             <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                                 <p className="text-sm">
                                     <strong>Important:</strong> Machine learning is an <strong>optional, asynchronous analysis layer</strong> used
@@ -243,7 +243,7 @@ Cardinalities:
                     <GlassCard>
                         <h2 className="text-3xl font-semibold mb-4">🔒 Query Playground Safety</h2>
 
-                        <div className="space-y-3 text-gray-300">
+                        <div className="space-y-3 text-muted-foreground">
                             <p>The SQL Query Playground implements strict safety measures:</p>
                             <ul className="list-disc list-inside space-y-2 ml-4">
                                 <li><strong>Whitelisted queries only:</strong> 8 predefined analytical queries</li>
@@ -261,7 +261,7 @@ Cardinalities:
 
                         <div className="grid md:grid-cols-3 gap-6">
                             <div>
-                                <h4 className="font-semibold text-cyber-400 mb-2">Database Layer</h4>
+                                <h4 className="font-semibold text-primary mb-2">Database Layer</h4>
                                 <ul className="text-sm space-y-1">
                                     <li>PostgreSQL 15+</li>
                                     <li>Triggers & Views</li>
@@ -270,7 +270,7 @@ Cardinalities:
                                 </ul>
                             </div>
                             <div>
-                                <h4 className="font-semibold text-purple-400 mb-2">Backend</h4>
+                                <h4 className="font-semibold text-secondary-foreground mb-2">Backend</h4>
                                 <ul className="text-sm space-y-1">
                                     <li>Node.js + Express</li>
                                     <li>Socket.IO</li>
@@ -294,9 +294,9 @@ Cardinalities:
                     <GlassCard>
                         <h2 className="text-3xl font-semibold mb-4">🎯 Key Learnings</h2>
 
-                        <div className="space-y-4 text-gray-300">
+                        <div className="space-y-4 text-muted-foreground">
                             <div>
-                                <h4 className="font-semibold text-white mb-2">1. Real-Time Event Broadcasting</h4>
+                                <h4 className="font-semibold text-foreground mb-2">1. Real-Time Event Broadcasting</h4>
                                 <p className="text-sm">
                                     <strong>Challenge:</strong> Synchronizing database writes with Socket.IO broadcasts.
                                     <br />
@@ -305,7 +305,7 @@ Cardinalities:
                             </div>
 
                             <div>
-                                <h4 className="font-semibold text-white mb-2">2. Anomaly Detection at Scale</h4>
+                                <h4 className="font-semibold text-foreground mb-2">2. Anomaly Detection at Scale</h4>
                                 <p className="text-sm">
                                     <strong>Challenge:</strong> Efficient statistical analysis on large datasets.
                                     <br />
@@ -314,7 +314,7 @@ Cardinalities:
                             </div>
 
                             <div>
-                                <h4 className="font-semibold text-white mb-2">3. Motion Design Without Overdoing It</h4>
+                                <h4 className="font-semibold text-foreground mb-2">3. Motion Design Without Overdoing It</h4>
                                 <p className="text-sm">
                                     <strong>Challenge:</strong> Premium animations without performance degradation or accessibility issues.
                                     <br />

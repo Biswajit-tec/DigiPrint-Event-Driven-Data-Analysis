@@ -157,7 +157,7 @@ const LiveStream = () => {
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-4xl font-bold mb-2">Live Event Stream</h1>
-          <p className="text-gray-400">Real-time event monitoring across tracked websites</p>
+          <p className="text-muted-foreground">Real-time event monitoring across tracked websites</p>
         </div>
 
         {/* Unified Tracking Script Generator + Monitoring */}
@@ -196,7 +196,7 @@ const LiveStream = () => {
           </button>
           <button
             onClick={() => { setLoading(true); loadEvents(); }}
-            className="px-4 py-2 glass rounded-lg text-sm text-gray-300 hover:bg-white/10 transition-all active:scale-95"
+            className="px-4 py-2 glass rounded-lg text-sm text-muted-foreground hover:bg-white/10 transition-all active:scale-95"
           >
             🔄 Refresh
           </button>
@@ -217,8 +217,8 @@ const LiveStream = () => {
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <div className="text-center">
-              <div className="w-12 h-12 border-4 border-cyber-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-              <p className="text-gray-400">Loading events...</p>
+              <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+              <p className="text-muted-foreground">Loading events...</p>
             </div>
           </div>
         ) : (

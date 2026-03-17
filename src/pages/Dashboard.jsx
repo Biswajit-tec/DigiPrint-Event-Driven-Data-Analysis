@@ -19,7 +19,7 @@ const eventTypeColors = {
   login: 'bg-green-500/20 text-green-400 border-green-500/30',
   logout: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
   click: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  search: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+  search: 'bg-secondary/20 text-secondary-foreground border-secondary/30',
   api_call: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
   page_view: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
   session_start: 'bg-pink-500/20 text-pink-400 border-pink-500/30',
@@ -89,8 +89,8 @@ const Dashboard = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-cyber-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-400">Loading dashboard from Supabase...</p>
+          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-muted-foreground">Loading dashboard from Supabase...</p>
         </div>
       </div>
     );
@@ -108,7 +108,7 @@ const Dashboard = () => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">Dashboard</h1>
-          <p className="text-gray-400">Real-time digital footprint analytics — powered by Supabase</p>
+          <p className="text-muted-foreground">Real-time digital footprint analytics — powered by Supabase</p>
           <div className="mt-3 flex items-center gap-3">
             <span className="flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-500/50">
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
@@ -150,7 +150,7 @@ const Dashboard = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-left text-gray-400 text-xs uppercase tracking-wider border-b border-white/10">
+                <tr className="text-left text-muted-foreground text-xs uppercase tracking-wider border-b border-border">
                   <th className="pb-3 pr-4">Site</th>
                   <th className="pb-3 pr-4">Event Type</th>
                   <th className="pb-3 pr-4">Timestamp</th>
@@ -160,7 +160,7 @@ const Dashboard = () => {
               <tbody className="divide-y divide-white/5">
                 {recentEvents.length > 0 ? (
                   recentEvents.map((ev, idx) => {
-                    const colorClass = eventTypeColors[ev.event_type] || 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+                    const colorClass = eventTypeColors[ev.event_type] || 'bg-gray-500/20 text-muted-foreground border-gray-500/30';
                     return (
                       <motion.tr
                         key={ev.event_id || idx}
@@ -169,14 +169,14 @@ const Dashboard = () => {
                         animate={{ opacity: 1 }}
                         transition={{ delay: idx * 0.04 }}
                       >
-                        <td className="py-3 pr-4 text-white font-medium">{ev.site_name || '—'}</td>
+                        <td className="py-3 pr-4 text-foreground font-medium">{ev.site_name || '—'}</td>
                         <td className="py-3 pr-4">
                           <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium border ${colorClass}`}>
                             {(ev.event_type || '').replace(/_/g, ' ').toUpperCase()}
                           </span>
                         </td>
-                        <td className="py-3 pr-4 text-gray-400 font-mono text-xs">{formatTime(ev.event_timestamp)}</td>
-                        <td className="py-3 text-gray-500 font-mono text-xs">
+                        <td className="py-3 pr-4 text-muted-foreground font-mono text-xs">{formatTime(ev.event_timestamp)}</td>
+                        <td className="py-3 text-muted-foreground font-mono text-xs">
                           {ev.session_id ? String(ev.session_id).slice(0, 12) + '…' : '—'}
                         </td>
                       </motion.tr>
@@ -184,7 +184,7 @@ const Dashboard = () => {
                   })
                 ) : (
                   <tr>
-                    <td colSpan={4} className="py-12 text-center text-gray-500">
+                    <td colSpan={4} className="py-12 text-center text-muted-foreground">
                       No recent events
                     </td>
                   </tr>

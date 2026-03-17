@@ -30,8 +30,8 @@ const EventCounter = ({ rate = 0, eventCount = 0 }) => {
         <div className="flex items-center gap-2">
           <span className="text-xl">⚡</span>
           <div>
-            <p className="text-xs text-gray-400 uppercase tracking-wide font-medium">Events/sec</p>
-            <p className="text-2xl font-bold text-cyber-400 tabular-nums">
+            <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium">Events/sec</p>
+            <p className="text-2xl font-bold text-primary tabular-nums">
               {displayRate}
             </p>
           </div>
@@ -44,8 +44,8 @@ const EventCounter = ({ rate = 0, eventCount = 0 }) => {
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
           <div>
-            <p className="text-xs text-gray-400 uppercase tracking-wide font-medium">In Feed</p>
-            <p className="text-lg font-semibold text-white tabular-nums">{eventCount}</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium">In Feed</p>
+            <p className="text-lg font-semibold text-foreground tabular-nums">{eventCount}</p>
           </div>
         </div>
       </div>

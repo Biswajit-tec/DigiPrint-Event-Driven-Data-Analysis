@@ -17,8 +17,8 @@ const CustomTooltip = ({ active, payload }) => {
   if (!active || !payload?.length) return null;
   const d = payload[0];
   return (
-    <div className="glass-strong rounded-lg p-3 border border-white/10 text-sm">
-      <p className="text-white font-medium">{d.name}</p>
+    <div className="glass-strong rounded-lg p-3 border border-border text-sm">
+      <p className="text-foreground font-medium">{d.name}</p>
       <p style={{ color: d.payload.fill }}>{d.value.toLocaleString()} events</p>
     </div>
   );
@@ -27,7 +27,7 @@ const CustomTooltip = ({ active, payload }) => {
 const CustomLegend = ({ payload }) => (
   <div className="flex flex-wrap justify-center gap-3 mt-2">
     {payload?.map((entry, idx) => (
-      <span key={idx} className="flex items-center gap-1.5 text-xs text-gray-400">
+      <span key={idx} className="flex items-center gap-1.5 text-xs text-muted-foreground">
         <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: entry.color }} />
         {entry.value}
       </span>
@@ -42,7 +42,7 @@ const CustomLegend = ({ payload }) => (
 const TopEventTypesChart = ({ data = [] }) => {
   if (!data.length) {
     return (
-      <div className="flex items-center justify-center h-64 text-gray-500">
+      <div className="flex items-center justify-center h-64 text-muted-foreground">
         No event type data available
       </div>
     );

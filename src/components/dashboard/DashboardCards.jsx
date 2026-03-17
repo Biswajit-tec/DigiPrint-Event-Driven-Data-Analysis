@@ -45,8 +45,8 @@ const iconMap = {
 };
 
 const colorSchemes = [
-  { bg: 'bg-cyber-500/10', border: 'border-cyber-500/30', text: 'text-cyber-400', iconBg: 'bg-cyber-500/20' },
-  { bg: 'bg-purple-500/10', border: 'border-purple-500/30', text: 'text-purple-400', iconBg: 'bg-purple-500/20' },
+  { bg: 'bg-primary/10', border: 'border-primary/30', text: 'text-primary', iconBg: 'bg-primary/20' },
+  { bg: 'bg-secondary/10', border: 'border-secondary/30', text: 'text-secondary-foreground', iconBg: 'bg-secondary/20' },
   { bg: 'bg-green-500/10', border: 'border-green-500/30', text: 'text-green-400', iconBg: 'bg-green-500/20' },
   { bg: 'bg-blue-500/10', border: 'border-blue-500/30', text: 'text-blue-400', iconBg: 'bg-blue-500/20' },
   { bg: 'bg-yellow-500/10', border: 'border-yellow-500/30', text: 'text-yellow-400', iconBg: 'bg-yellow-500/20' },
@@ -105,7 +105,7 @@ const DashboardCards = ({ summary, eventRate }) => {
           >
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <p className="text-gray-400 text-sm font-medium mb-1">{card.title}</p>
+                <p className="text-muted-foreground text-sm font-medium mb-1">{card.title}</p>
                 <h3 className={`text-3xl font-bold ${scheme.text} stat-count-up`}>
                   {card.format === 'hour' ? (
                     card.value !== null && card.value !== undefined ? `${card.value}:00` : 'N/A'

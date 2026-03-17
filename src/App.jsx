@@ -46,7 +46,7 @@ function App() {
     <AuthProvider>
       <ModeProvider>
         <Router>
-          <div className="min-h-screen bg-dark-950 text-gray-100">
+          <div className="min-h-screen bg-background text-foreground">
             <Navigation />
 
             <AnimatePresence mode="wait">

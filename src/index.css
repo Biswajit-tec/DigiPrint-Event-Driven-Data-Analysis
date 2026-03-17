@@ -4,6 +4,53 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
 /* CSS Custom Properties */
 :root {
   /* Colors */
@@ -29,8 +76,8 @@
 
   /* Effects */
   --blur-glass: 12px;
-  --glow-cyber: 0 0 20px rgba(0, 191, 255, 0.4);
-  --glow-purple: 0 0 20px rgba(139, 92, 246, 0.4);
+  --glow-primary: 0 0 20px hsl(var(--primary) / 0.4);
+  --glow-secondary: 0 0 20px hsl(var(--secondary) / 0.4);
 }
 
 /* Base Styles */
@@ -40,7 +87,9 @@
   }
 
   body {
-    @apply bg-dark-950 text-gray-100 font-sans antialiased;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    @apply font-sans antialiased;
     overflow-x: hidden;
   }
 
@@ -77,33 +126,16 @@
     border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
-  /* Glow Effects */
-  .glow-cyber {
-    box-shadow: var(--glow-cyber);
-  }
-
-  .glow-purple {
-    box-shadow: var(--glow-purple);
-  }
-
-  .glow-cyber-hover {
-    transition: box-shadow var(--timing-medium) ease;
-  }
-
-  .glow-cyber-hover:hover {
-    box-shadow: 0 0 30px rgba(0, 191, 255, 0.6);
-  }
-
   /* Interactive Elements */
   .btn-primary {
-    @apply px-6 py-3 bg-cyber-500 text-dark-950 font-medium rounded-lg;
-    @apply hover:bg-cyber-400 hover:shadow-glow transition-all duration-200;
+    @apply px-6 py-3 bg-primary text-primary-foreground font-medium rounded-lg;
+    @apply hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 transition-all duration-200;
     @apply active:scale-95;
   }
 
   .btn-secondary {
-    @apply px-6 py-3 bg-purple-500 text-white font-medium rounded-lg;
-    @apply hover:bg-purple-400 hover:shadow-glow-purple transition-all duration-200;
+    @apply px-6 py-3 bg-secondary text-foreground font-medium rounded-lg;
+    @apply hover:bg-secondary/90 hover:shadow-lg hover:shadow-secondary/20 transition-all duration-200;
     @apply active:scale-95;
   }
 
@@ -199,25 +231,28 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-dark-900;
+  background-color: hsl(var(--card));
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-dark-700 rounded-full;
+  background-color: hsl(var(--accent));
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-cyber-500;
+  background-color: hsl(var(--primary));
 }
 
 /* Selection */
 ::selection {
-  @apply bg-cyber-500/30 text-white;
+  background-color: hsl(var(--primary) / 0.3);
+  color: hsl(var(--foreground));
 }
 
 /* Focus Styles */
 :focus-visible {
-  @apply outline-none ring-2 ring-cyber-500 ring-offset-2 ring-offset-dark-950;
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--primary));
 }
 
 /* Dark Theme Select Dropdowns */

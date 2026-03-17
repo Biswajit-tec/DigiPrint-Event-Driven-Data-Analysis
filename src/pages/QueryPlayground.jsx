@@ -42,8 +42,8 @@ const QueryPlayground = () => {
         if (loading) {
             return (
                 <div className="text-center py-12">
-                    <div className="w-12 h-12 border-4 border-cyber-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                    <p className="text-gray-400">Executing query...</p>
+                    <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                    <p className="text-muted-foreground">Executing query...</p>
                 </div>
             );
         }
@@ -58,7 +58,7 @@ const QueryPlayground = () => {
 
         if (!results || !results.data || results.data.length === 0) {
             return (
-                <div className="text-center py-12 text-gray-500">
+                <div className="text-center py-12 text-muted-foreground">
                     No results. Select a query to execute.
                 </div>
             );
@@ -69,10 +69,10 @@ const QueryPlayground = () => {
         return (
             <div>
                 <div className="mb-4 flex items-center justify-between">
-                    <span className="text-sm text-gray-400">
+                    <span className="text-sm text-muted-foreground">
                         {results.data.length} row{results.data.length !== 1 ? 's' : ''} returned
                     </span>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-muted-foreground">
                         Execution time: {results.execution_time_ms || '< 1'}ms
                     </span>
                 </div>
@@ -81,7 +81,7 @@ const QueryPlayground = () => {
                         <thead>
                             <tr className="border-b border-white/20">
                                 {columns.map((col) => (
-                                    <th key={col} className="text-left py-2 px-3 text-gray-400 font-medium uppercase text-xs">
+                                    <th key={col} className="text-left py-2 px-3 text-muted-foreground font-medium uppercase text-xs">
                                         {col.replace(/_/g, ' ')}
                                     </th>
                                 ))}
@@ -89,7 +89,7 @@ const QueryPlayground = () => {
                         </thead>
                         <tbody className="font-mono text-xs">
                             {results.data.map((row, rowIndex) => (
-                                <tr key={rowIndex} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                                <tr key={rowIndex} className="border-b border-white/5 hover:bg-muted transition-colors">
                                     {columns.map((col) => (
                                         <td key={col} className="py-2 px-3">
                                             {typeof row[col] === 'object' ? JSON.stringify(row[col]) : String(row[col])}
@@ -115,7 +115,7 @@ const QueryPlayground = () => {
             <div className="container mx-auto px-6">
                 <div className="mb-8">
                     <h1 className="text-4xl font-bold mb-2">SQL Query Playground</h1>
-                    <p className="text-gray-400">Execute predefined, read-only analytical queries</p>
+                    <p className="text-muted-foreground">Execute predefined, read-only analytical queries</p>
 
                     <div className="mt-4 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
                         <p className="text-sm text-yellow-400">
@@ -136,12 +136,12 @@ const QueryPlayground = () => {
                                         onClick={() => executeQuery(query.id)}
                                         disabled={loading}
                                         className={`w-full text-left p-3 rounded-lg transition-all ${selectedQuery === query.id
-                                                ? 'bg-cyber-500/20 border border-cyber-500/50'
-                                                : 'bg-white/5 hover:bg-white/10'
+                                                ? 'bg-primary/20 border border-primary/50'
+                                                : 'bg-muted hover:bg-white/10'
                                             } disabled:opacity-50 disabled:cursor-not-allowed`}
                                     >
                                         <div className="font-medium text-sm mb-1">{query.name}</div>
-                                        <div className="text-xs text-gray-400">{query.description}</div>
+                                        <div className="text-xs text-muted-foreground">{query.description}</div>
                                     </button>
                                 ))}
                             </div>
@@ -173,19 +173,19 @@ const QueryPlayground = () => {
                         {/* Query Info */}
                         {selectedQuery && (
                             <GlassCard className="mt-6">
-                                <h4 className="font-semibold mb-2 text-sm text-gray-400">Query Information</h4>
+                                <h4 className="font-semibold mb-2 text-sm text-muted-foreground">Query Information</h4>
                                 <div className="space-y-2 text-sm">
                                     <div className="flex justify-between">
-                                        <span className="text-gray-400">Query ID:</span>
-                                        <span className="font-mono text-cyber-400">{selectedQuery}</span>
+                                        <span className="text-muted-foreground">Query ID:</span>
+                                        <span className="font-mono text-primary">{selectedQuery}</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-gray-400">Type:</span>
+                                        <span className="text-muted-foreground">Type:</span>
                                         <span className="text-green-400">Read-Only SELECT</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-gray-400">Permissions:</span>
-                                        <span className="text-purple-400">Whitelisted</span>
+                                        <span className="text-muted-foreground">Permissions:</span>
+                                        <span className="text-secondary-foreground">Whitelisted</span>
                                     </div>
                                 </div>
                             </GlassCard>

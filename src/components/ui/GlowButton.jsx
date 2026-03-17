@@ -14,10 +14,10 @@ const GlowButton = ({
     ...props
 }) => {
     const variants = {
-        primary: 'bg-cyber-500 text-dark-950 hover:bg-cyber-400 hover:shadow-glow',
-        secondary: 'bg-purple-500 text-white hover:bg-purple-400 hover:shadow-glow-purple',
-        glass: 'glass hover:bg-white/10 hover:border-white/30 text-gray-100',
-        danger: 'bg-red-600 text-white hover:bg-red-500 hover:shadow-[0_0_20px_rgba(239,68,68,0.4)]',
+        primary: 'bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-lg shadow-primary/20',
+        secondary: 'bg-secondary text-foreground hover:bg-secondary/90 hover:shadow-lg shadow-secondary/20',
+        glass: 'glass hover:bg-white/10 hover:border-white/30 text-foreground',
+        danger: 'bg-red-600 text-foreground hover:bg-red-500 hover:shadow-[0_0_20px_rgba(239,68,68,0.4)]',
     };
 
     const sizes = {

@@ -14,13 +14,13 @@ const ArchitectureViz = () => {
             <div className="container mx-auto px-6 max-w-5xl">
                 <div className="mb-8">
                     <h1 className="text-4xl font-bold mb-2">System Architecture</h1>
-                    <p className="text-gray-400">Event-driven architecture visualization</p>
+                    <p className="text-muted-foreground">Event-driven architecture visualization</p>
                 </div>
 
                 <GlassCard className="mb-6">
                     <h2 className="text-2xl font-semibold mb-6">Architecture Overview</h2>
-                    <div className="bg-dark-900 p-6 rounded-lg font-mono text-sm overflow-x-auto">
-                        <pre className="text-gray-300">{`
+                    <div className="bg-card p-6 rounded-lg font-mono text-sm overflow-x-auto">
+                        <pre className="text-muted-foreground">{`
 ┌─────────────────────────────────────────────────────────────────┐
 │                         CLIENT LAYER                             │
 │  ┌─────────────┐  ┌──────────────┐  ┌─────────────────────┐   │
@@ -85,21 +85,21 @@ const ArchitectureViz = () => {
                 <div className="grid md:grid-cols-2 gap-6">
                     <GlassCard>
                         <h3 className="text-xl font-semibold mb-4">Key Components</h3>
-                        <ul className="space-y-2 text-sm text-gray-300">
+                        <ul className="space-y-2 text-sm text-muted-foreground">
                             <li className="flex items-start gap-2">
-                                <span className="text-cyber-400">▸</span>
+                                <span className="text-primary">▸</span>
                                 <span><strong>Event Ingestion:</strong> POST /api/events with Socket.IO broadcast</span>
                             </li>
                             <li className="flex items-start gap-2">
-                                <span className="text-cyber-400">▸</span>
+                                <span className="text-primary">▸</span>
                                 <span><strong>Real-Time Stream:</strong> WebSocket connection for live updates</span>
                             </li>
                             <li className="flex items-start gap-2">
-                                <span className="text-cyber-400">▸</span>
+                                <span className="text-primary">▸</span>
                                 <span><strong>Analytics Engine:</strong> SQL views + stored procedures</span>
                             </li>
                             <li className="flex items-start gap-2">
-                                <span className="text-cyber-400">▸</span>
+                                <span className="text-primary">▸</span>
                                 <span><strong>Anomaly Detection:</strong> Z-score statistical analysis</span>
                             </li>
                         </ul>
@@ -107,7 +107,7 @@ const ArchitectureViz = () => {
 
                     <GlassCard>
                         <h3 className="text-xl font-semibold mb-4">Data Flow</h3>
-                        <ol className="space-y-2 text-sm text-gray-300 list-decimal list-inside">
+                        <ol className="space-y-2 text-sm text-muted-foreground list-decimal list-inside">
                             <li>Client sends event to API</li>
                             <li>Event Service validates & stores in DB</li>
                             <li>Database trigger auto-updates session</li>

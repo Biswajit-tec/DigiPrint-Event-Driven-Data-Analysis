@@ -5,7 +5,7 @@ const eventTypeColors = {
   login: { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30', dot: 'bg-green-400' },
   logout: { bg: 'bg-orange-500/20', text: 'text-orange-400', border: 'border-orange-500/30', dot: 'bg-orange-400' },
   click: { bg: 'bg-blue-500/20', text: 'text-blue-400', border: 'border-blue-500/30', dot: 'bg-blue-400' },
-  search: { bg: 'bg-purple-500/20', text: 'text-purple-400', border: 'border-purple-500/30', dot: 'bg-purple-400' },
+  search: { bg: 'bg-secondary/20', text: 'text-secondary-foreground', border: 'border-secondary/30', dot: 'bg-secondary/90' },
   api_call: { bg: 'bg-yellow-500/20', text: 'text-yellow-400', border: 'border-yellow-500/30', dot: 'bg-yellow-400' },
   page_view: { bg: 'bg-cyan-500/20', text: 'text-cyan-400', border: 'border-cyan-500/30', dot: 'bg-cyan-400' },
   session_start: { bg: 'bg-pink-500/20', text: 'text-pink-400', border: 'border-pink-500/30', dot: 'bg-pink-400' },
@@ -20,7 +20,7 @@ const eventTypeColors = {
   rage_click: { bg: 'bg-red-600/20', text: 'text-red-400', border: 'border-red-600/30', dot: 'bg-red-500' },
 };
 
-const defaultColor = { bg: 'bg-gray-500/20', text: 'text-gray-400', border: 'border-gray-500/30', dot: 'bg-gray-400' };
+const defaultColor = { bg: 'bg-gray-500/20', text: 'text-muted-foreground', border: 'border-gray-500/30', dot: 'bg-gray-400' };
 
 /** Event type icons (SVG paths) */
 const eventIcons = {
@@ -192,8 +192,8 @@ const LiveEventFeed = ({ events = [], highlightIds = new Set(), onSelectEvent })
     return (
       <div className="text-center py-20">
         <div className="text-6xl mb-4">📡</div>
-        <h3 className="text-xl font-semibold mb-2 text-white">No Events Yet</h3>
-        <p className="text-gray-400">
+        <h3 className="text-xl font-semibold mb-2 text-foreground">No Events Yet</h3>
+        <p className="text-muted-foreground">
           Waiting for events to appear in the stream...
         </p>
       </div>
@@ -215,7 +215,7 @@ const LiveEventFeed = ({ events = [], highlightIds = new Set(), onSelectEvent })
               className={`glass rounded-lg p-4 border-l-4 cursor-pointer transition-all duration-500 ${
                 isHighlighted
                   ? 'border-l-green-400 bg-green-500/10 shadow-[0_0_15px_rgba(34,197,94,0.15)]'
-                  : 'border-l-cyber-500 hover:bg-white/[.06]'
+                  : 'border-l-primary hover:bg-white/[.06]'
               }`}
               initial={{ opacity: 0, x: -30, height: 0 }}
               animate={{
@@ -239,7 +239,7 @@ const LiveEventFeed = ({ events = [], highlightIds = new Set(), onSelectEvent })
                     <span className={`${color.text} shrink-0`}>{icon}</span>
 
                     {event.site_name && (
-                      <span className="text-sm font-medium text-white">
+                      <span className="text-sm font-medium text-foreground">
                         {event.site_name}
                       </span>
                     )}
@@ -249,19 +249,19 @@ const LiveEventFeed = ({ events = [], highlightIds = new Set(), onSelectEvent })
                       <span className={`w-1.5 h-1.5 rounded-full ${color.dot}`} />
                       {(event.event_type || '').replace(/_/g, ' ').toUpperCase()}
                     </span>
-                    <span className="text-gray-500 text-xs font-mono">
+                    <span className="text-muted-foreground text-xs font-mono">
                       {formatTime(event.event_timestamp)}
                     </span>
                   </div>
 
                   {/* Human-readable description */}
-                  <p className="text-sm text-gray-300 ml-6">
+                  <p className="text-sm text-muted-foreground ml-6">
                     {description}
                   </p>
                 </div>
 
                 {/* Right: Session + Device */}
-                <div className="text-right text-xs text-gray-500 shrink-0">
+                <div className="text-right text-xs text-muted-foreground shrink-0">
                   <div className="font-mono">
                     {event.session_id ? String(event.session_id).slice(0, 8) + '…' : '—'}
                   </div>

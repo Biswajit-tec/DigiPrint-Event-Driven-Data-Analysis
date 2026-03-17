@@ -17,11 +17,8 @@ const Landing = () => {
             {/* Hero Section */}
             <section className="relative overflow-hidden">
                 {/* Animated Background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950">
-                    <div className="absolute inset-0 opacity-20">
-                        <div className="absolute top-20 left-20 w-96 h-96 bg-cyber-500 rounded-full filter blur-[128px] animate-pulse" />
-                        <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500 rounded-full filter blur-[128px] animate-pulse delay-1000" />
-                    </div>
+                <div className="absolute inset-0 bg-background">
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
                 </div>
 
                 <ParallaxSection intensity={0.8} className="relative z-10">
@@ -33,14 +30,14 @@ const Landing = () => {
                             className="max-w-4xl mx-auto text-center"
                         >
                             <motion.div variants={staggerItem} className="mb-6">
-                                <span className="inline-block px-4 py-2 bg-cyber-500/10 border border-cyber-500/30 rounded-full text-cyber-400 text-sm font-medium">
+                                <span className="inline-block px-4 py-2 bg-primary/10 border border-primary/30 rounded-full text-primary text-sm font-medium">
                                     Event-Driven Intelligence Platform
                                 </span>
                             </motion.div>
 
                             <motion.h1
                                 variants={staggerItem}
-                                className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-cyber-400 to-purple-400 bg-clip-text text-transparent"
+                                className="text-6xl md:text-7xl font-bold mb-6 text-foreground"
                             >
                                 Digital Footprint
                                 <br />
@@ -49,7 +46,7 @@ const Landing = () => {
 
                             <motion.p
                                 variants={staggerItem}
-                                className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto"
+                                className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto"
                             >
                                 Real-time event tracking, advanced database analytics, and intelligent anomaly
                                 detection — all in a premium cyber-intelligence interface.
@@ -78,7 +75,7 @@ const Landing = () => {
 
             {/* Features Section */}
             <ParallaxSection intensity={0.6}>
-                <section className="py-20 bg-dark-900/50">
+                <section className="py-20 bg-card/50">
                     <div className="container mx-auto px-6">
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
@@ -87,7 +84,7 @@ const Landing = () => {
                             className="text-center mb-16"
                         >
                             <h2 className="text-4xl font-bold mb-4">Core Capabilities</h2>
-                            <p className="text-gray-400 text-lg">Built on PostgreSQL with advanced DBMS concepts</p>
+                            <p className="text-muted-foreground text-lg">Built on PostgreSQL with advanced DBMS concepts</p>
                         </motion.div>
 
                         <div className="grid md:grid-cols-3 gap-8">
@@ -133,7 +130,7 @@ const Landing = () => {
                                 >
                                     <div className="text-4xl mb-4">{feature.icon}</div>
                                     <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                                    <p className="text-gray-400">{feature.description}</p>
+                                    <p className="text-muted-foreground">{feature.description}</p>
                                 </motion.div>
                             ))}
                         </div>
@@ -168,10 +165,10 @@ const Landing = () => {
             </section>
 
             {/* CTA */}
-            <section className="py-20 bg-gradient-to-r from-cyber-600/10 via-purple-600/10 to-cyber-600/10">
+            <section className="py-20 bg-muted/30 border-t border-border">
                 <div className="container mx-auto px-6 text-center">
                     <h2 className="text-4xl font-bold mb-6">Ready to Explore?</h2>
-                    <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+                    <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                         Dive into the dashboard to see real-time analytics, or explore the SQL playground to
                         understand the database architecture.
                     </p>

@@ -43,8 +43,8 @@ const Analytics = () => {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center">
-                    <div className="w-16 h-16 border-4 border-cyber-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                    <p className="text-gray-400">Loading analytics...</p>
+                    <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                    <p className="text-muted-foreground">Loading analytics...</p>
                 </div>
             </div>
         );
@@ -61,7 +61,7 @@ const Analytics = () => {
             <div className="container mx-auto px-6">
                 <div className="mb-8">
                     <h1 className="text-4xl font-bold mb-2">Analytics & Insights</h1>
-                    <p className="text-gray-400">Deep dive into event patterns and site behavior</p>
+                    <p className="text-muted-foreground">Deep dive into event patterns and site behavior</p>
                 </div>
 
                 {/* Event Frequency Chart */}
@@ -99,7 +99,7 @@ const Analytics = () => {
                             </LineChart>
                         </ResponsiveContainer>
                     ) : (
-                        <div className="flex items-center justify-center h-64 text-gray-500">
+                        <div className="flex items-center justify-center h-64 text-muted-foreground">
                             No event frequency data available yet
                         </div>
                     )}
@@ -125,7 +125,7 @@ const Analytics = () => {
                             </BarChart>
                         </ResponsiveContainer>
                     ) : (
-                        <div className="flex items-center justify-center h-64 text-gray-500">
+                        <div className="flex items-center justify-center h-64 text-muted-foreground">
                             No peak activity data available yet
                         </div>
                     )}
@@ -137,28 +137,28 @@ const Analytics = () => {
                     <div className="overflow-x-auto">
                         <table className="w-full">
                             <thead>
-                                <tr className="border-b border-white/10">
-                                    <th className="text-left py-3 px-4 text-gray-400 font-medium">Site</th>
-                                    <th className="text-right py-3 px-4 text-gray-400 font-medium">Total Events</th>
-                                    <th className="text-right py-3 px-4 text-gray-400 font-medium">Sessions</th>
-                                    <th className="text-right py-3 px-4 text-gray-400 font-medium">Avg Events/Session</th>
+                                <tr className="border-b border-border">
+                                    <th className="text-left py-3 px-4 text-muted-foreground font-medium">Site</th>
+                                    <th className="text-right py-3 px-4 text-muted-foreground font-medium">Total Events</th>
+                                    <th className="text-right py-3 px-4 text-muted-foreground font-medium">Sessions</th>
+                                    <th className="text-right py-3 px-4 text-muted-foreground font-medium">Avg Events/Session</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {userBehavior.length > 0 ? (
                                     userBehavior.map((site, index) => (
-                                        <tr key={index} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                                        <tr key={index} className="border-b border-white/5 hover:bg-muted transition-colors">
                                             <td className="py-3 px-4 font-medium">{site.username}</td>
-                                            <td className="py-3 px-4 text-right text-cyber-400">{site.total_events}</td>
-                                            <td className="py-3 px-4 text-right text-purple-400">{site.total_sessions}</td>
-                                            <td className="py-3 px-4 text-right text-gray-300">
+                                            <td className="py-3 px-4 text-right text-primary">{site.total_events}</td>
+                                            <td className="py-3 px-4 text-right text-secondary-foreground">{site.total_sessions}</td>
+                                            <td className="py-3 px-4 text-right text-muted-foreground">
                                                 {(site.total_events / (site.total_sessions || 1)).toFixed(1)}
                                             </td>
                                         </tr>
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan={4} className="py-12 text-center text-gray-500">
+                                        <td colSpan={4} className="py-12 text-center text-muted-foreground">
                                             No site behavior data available yet
                                         </td>
                                     </tr>

@@ -14,17 +14,17 @@ const EventReplay = () => {
             <div className="container mx-auto px-6">
                 <div className="mb-8">
                     <h1 className="text-4xl font-bold mb-2">Event Replay</h1>
-                    <p className="text-gray-400">Timeline-based event playback with controls</p>
+                    <p className="text-muted-foreground">Timeline-based event playback with controls</p>
                 </div>
 
                 <GlassCard>
                     <div className="text-center py-20">
                         <div className="text-6xl mb-4">⏱️</div>
                         <h3 className="text-2xl font-semibold mb-2">Event Replay Mode</h3>
-                        <p className="text-gray-400 mb-4">
+                        <p className="text-muted-foreground mb-4">
                             Step through historical events with timeline controls, pause, rewind, and fast-forward.
                         </p>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-muted-foreground">
                             Coming soon: Date range selection, playback speed controls, and event timeline visualization.
                         </p>
                     </div>

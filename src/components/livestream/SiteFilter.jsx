@@ -39,7 +39,7 @@ const SiteFilter = ({
   onRangeChange,
 }) => {
   const selectClasses =
-    'px-3 py-2 bg-dark-900 border border-white/10 rounded-lg text-sm text-gray-200 focus:outline-none focus:border-cyber-500/50 focus:ring-1 focus:ring-cyber-500/30 transition-all appearance-none cursor-pointer';
+    'px-3 py-2 bg-card border border-border rounded-lg text-sm text-gray-200 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all appearance-none cursor-pointer';
 
   return (
     <motion.div
@@ -50,7 +50,7 @@ const SiteFilter = ({
     >
       {/* Site Filter */}
       <div className="flex items-center gap-2">
-        <label className="text-xs text-gray-400 uppercase tracking-wide font-medium">Site</label>
+        <label className="text-xs text-muted-foreground uppercase tracking-wide font-medium">Site</label>
         <select
           value={selectedSite || ''}
           onChange={(e) => onSiteChange(e.target.value || null)}
@@ -68,7 +68,7 @@ const SiteFilter = ({
 
       {/* Event Type Filter */}
       <div className="flex items-center gap-2">
-        <label className="text-xs text-gray-400 uppercase tracking-wide font-medium">Type</label>
+        <label className="text-xs text-muted-foreground uppercase tracking-wide font-medium">Type</label>
         <select
           value={selectedType || 'all'}
           onChange={(e) => onTypeChange(e.target.value)}
@@ -85,16 +85,16 @@ const SiteFilter = ({
 
       {/* Time Range */}
       <div className="flex items-center gap-2">
-        <label className="text-xs text-gray-400 uppercase tracking-wide font-medium">Range</label>
+        <label className="text-xs text-muted-foreground uppercase tracking-wide font-medium">Range</label>
         <div className="flex gap-1">
           {timeRanges.map((tr) => (
             <button
               key={tr.label}
               onClick={() => onRangeChange(tr.value)}
-              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all border ${
                 selectedRange === tr.value
-                  ? 'bg-cyber-500/20 text-cyber-400 border border-cyber-500/50'
-                  : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                  ? 'bg-transparent border-foreground text-foreground shadow-sm'
+                  : 'bg-muted border-transparent text-muted-foreground hover:bg-white/10 hover:border-border'
               }`}
             >
               {tr.label}
