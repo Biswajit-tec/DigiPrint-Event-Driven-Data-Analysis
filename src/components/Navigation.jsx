@@ -25,7 +25,7 @@ const Navigation = () => {
     const navItems = [
         { path: '/', label: 'Home' },
         { path: '/dashboard', label: 'Dashboard' },
-        { path: '/live-stream', label: 'Live Stream' },
+        { path: '/live-tracking', label: 'Live Tracking' },
         { path: '/analytics', label: 'Analytics' },
         { path: '/anomalies', label: 'Anomalies' },
         { path: '/query-playground', label: 'SQL Playground' },

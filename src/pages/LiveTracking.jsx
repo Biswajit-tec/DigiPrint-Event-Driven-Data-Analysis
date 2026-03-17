@@ -15,7 +15,7 @@ import {
   unsubscribeChannel,
 } from '../api/queries';
 
-const LiveStream = () => {
+const LiveTracking = () => {
   // Filter state
   const [trackedDomain, setTrackedDomain] = useState(null);
   const [siteFilter, setSiteFilter] = useState(null);
@@ -156,7 +156,7 @@ const LiveStream = () => {
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-4xl font-bold mb-2">Live Event Stream</h1>
+          <h1 className="text-4xl font-bold mb-2">Live Event Tracking</h1>
           <p className="text-muted-foreground">Real-time event monitoring across tracked websites</p>
         </div>
 
@@ -241,4 +241,4 @@ const LiveStream = () => {
   );
 };
 
-export default LiveStream;
+export default LiveTracking;

@@ -12,7 +12,7 @@ import Landing from './pages/Landing';
 import LoginPage from './pages/login';
 import SignupPage from './pages/signup';
 import Dashboard from './pages/Dashboard';
-import LiveStream from './pages/LiveStream';
+import LiveTracking from './pages/LiveTracking';
 import Analytics from './pages/Analytics';
 import UserAnalytics from './pages/UserAnalytics';
 import EventReplay from './pages/EventReplay';
@@ -61,7 +61,7 @@ function App() {
 
                 {/* Protected routes */}
                 <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                <Route path="/live-stream" element={<ProtectedRoute><LiveStream /></ProtectedRoute>} />
+                <Route path="/live-tracking" element={<ProtectedRoute><LiveTracking /></ProtectedRoute>} />
                 <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
                 <Route path="/user-analytics" element={<ProtectedRoute><UserAnalytics /></ProtectedRoute>} />
                 <Route path="/event-replay" element={<ProtectedRoute><EventReplay /></ProtectedRoute>} />
