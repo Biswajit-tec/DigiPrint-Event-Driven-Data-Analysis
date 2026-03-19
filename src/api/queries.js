@@ -1039,7 +1039,7 @@ export async function executePlaygroundQuery(queryId) {
   const start = Date.now();
   
   try {
-    const { data } = await api.post('/queries/execute', { query_id: queryId });
+    const data = await api.executeQuery(queryId);
     
     if (!data.success) {
       throw new Error(data.error || 'Server returned an error');
@@ -1052,7 +1052,7 @@ export async function executePlaygroundQuery(queryId) {
       rowCount: rows.length,
     };
   } catch (err) {
-    const message = err.response?.data?.error || err.message || 'Failed to execute query';
+    const message = err.error || err.response?.data?.error || err.message || 'Failed to execute query';
     throw new Error(message);
   }
 }
