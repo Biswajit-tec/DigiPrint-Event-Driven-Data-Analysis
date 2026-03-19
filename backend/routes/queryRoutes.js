@@ -63,8 +63,18 @@ router.post('/execute', authenticateUser, async (req, res) => {
         const user = req.user;
         const token = req.token;
 
+        // Debug log — visible in Render logs
+        console.log(`[SQL Playground] execute called: query_id="${query_id}", user=${user?.id}`);
+        console.log(`[SQL Playground] available keys: ${Object.keys(queryRegistry).join(', ')}`);
+
         if (!query_id || !queryRegistry[query_id]) {
-            return res.status(404).json({ success: false, error: "Query not found" });
+            console.error(`[SQL Playground] Query not found: "${query_id}"`);
+            return res.status(404).json({
+                success: false,
+                error: "Query not found",
+                received: query_id,
+                available: Object.keys(queryRegistry)
+            });
         }
 
         const queryConfig = queryRegistry[query_id];
