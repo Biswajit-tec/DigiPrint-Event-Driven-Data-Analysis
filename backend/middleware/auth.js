@@ -5,17 +5,22 @@ const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 require('dotenv').config();
 
-const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || 'https://wufarfidmvjsncvhjuzo.supabase.co';
-const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || 'https://wufarfidmvjsncvhjuzo.supabase.co';
+const supabaseKey = process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
 
-if (!supabaseUrl || !supabaseKey) {
-    console.error('⚠️ Supabase credentials missing in backend environment for authentication.');
+if (!supabaseKey) {
+    console.error('⚠️ SUPABASE_ANON_KEY or VITE_SUPABASE_ANON_KEY is missing in backend environment!');
+    console.error('⚠️ The server will start, but queries/auth will fail until it is set in Render Env Vars.');
 }
 
-// Base client for auth verification
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Base client for auth verification - only initialize if key exists
+const supabase = supabaseKey ? createClient(supabaseUrl, supabaseKey) : null;
 
 const authenticateUser = async (req, res, next) => {
+    if (!supabase) {
+        return res.status(500).json({ success: false, error: 'Server authentication misconfigured (missing Supabase keys in Render Dashboard)' });
+    }
+
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(401).json({ success: false, error: 'Missing or invalid authorization header' });
