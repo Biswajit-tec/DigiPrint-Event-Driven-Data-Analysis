@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Cell } from 'recharts';
+import ReactECharts from 'echarts-for-react';
 
 const TopPagesChart = ({ data }) => {
   if (!data || data.length === 0) {
@@ -10,40 +10,69 @@ const TopPagesChart = ({ data }) => {
     );
   }
 
-  // Ensure data fits properly
-  const chartData = data.slice(0, 7).map(row => ({
-    page: String(row.page).replace('https://', '').replace('http://', '').split('?')[0],
-    visits: Number(row.visits)
+  // Map dynamic data to ECharts format
+  const chartData = data.slice(0, 8).map(item => ({
+    value: Number(item.visits),
+    name: String(item.page).replace('https://', '').replace('http://', '').split('?')[0]
   }));
 
+  const option = {
+    tooltip: {
+      trigger: 'item',
+      backgroundColor: '#0f172a',
+      borderColor: '#334155',
+      textStyle: { color: '#f8fafc' },
+      formatter: '{b}: {c} visits ({d}%)'
+    },
+    legend: {
+      top: 'bottom',
+      textStyle: { color: '#94a3b8', fontSize: 12 },
+      type: 'scroll',
+      padding: [10, 0, 0, 0]
+    },
+    series: [
+      {
+        name: 'Top Pages',
+        type: 'pie',
+        radius: [40, 110], // Increased radius for better visibility
+        center: ['50%', '45%'], // Adjusted center to make room for legend
+        roseType: 'radius', // Balanced Nightingale Rose chart
+        avoidLabelOverlap: true,
+        itemStyle: {
+          borderRadius: 10,
+          borderColor: 'rgba(0,0,0,0.3)',
+          borderWidth: 2
+        },
+        label: {
+          show: true,
+          position: 'outside',
+          formatter: '{b}',
+          fontSize: 13,
+          color: '#f8fafc',
+          fontWeight: 500
+        },
+        labelLine: {
+          length: 15,
+          length2: 10,
+          smooth: true,
+          lineStyle: {
+            width: 2,
+            type: 'solid'
+          }
+        },
+        data: chartData,
+        color: ['#00bfff', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#64748b', '#0ea5e9', '#6366f1']
+      }
+    ]
+  };
+
   return (
-    <div className="h-64 mt-4">
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={chartData} layout="vertical" margin={{ top: 10, right: 20, left: 10, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" horizontal={true} vertical={false} />
-          <XAxis type="number" stroke="#ffffff50" fontSize={12} axisLine={false} tickLine={false} />
-          <YAxis 
-            type="category" 
-            dataKey="page" 
-            stroke="#ffffff50" 
-            fontSize={11} 
-            width={120} 
-            axisLine={false} 
-            tickLine={false} 
-            tickFormatter={(value) => value.length > 20 ? value.substring(0, 20) + '...' : value}
-          />
-          <Tooltip 
-            cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }} 
-            contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px' }}
-            formatter={(value) => [value, 'Visits']}
-          />
-          <Bar dataKey="visits" radius={[0, 4, 4, 0]} maxBarSize={40}>
-            {chartData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill="#00bfff" fillOpacity={0.8} />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
+    <div className="h-80 mt-4 w-full">
+      <ReactECharts 
+        option={option} 
+        style={{ height: '100%', width: '100%' }}
+        opts={{ renderer: 'svg' }}
+      />
     </div>
   );
 };

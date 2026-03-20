@@ -41,11 +41,11 @@ const SiteAnalyticsChart = ({ data = [] }) => {
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
           <XAxis
             dataKey="site_name"
-            tick={{ fill: '#94a3b8', fontSize: 12 }}
+            tick={{ fill: '#94a3b8', fontSize: 13 }}
             axisLine={{ stroke: 'rgba(255,255,255,0.1)' }}
           />
           <YAxis
-            tick={{ fill: '#94a3b8', fontSize: 12 }}
+            tick={{ fill: '#94a3b8', fontSize: 13 }}
             axisLine={{ stroke: 'rgba(255,255,255,0.1)' }}
           />
           <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.04)' }} />

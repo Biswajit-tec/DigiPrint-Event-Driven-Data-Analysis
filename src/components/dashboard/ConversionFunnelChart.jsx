@@ -1,47 +1,120 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Cell } from 'recharts';
+import ReactECharts from 'echarts-for-react';
 
 const ConversionFunnelChart = ({ data }) => {
-  if (!data || data.length === 0 || data.every(d => d.count === 0)) {
+  if (!data || data.length === 0) {
     return (
-      <div className="h-64 mt-4 flex flex-col items-center justify-center text-muted-foreground border border-dashed border-white/10 rounded-xl">
-        <p className="text-sm">No funnel data available.</p>
+      <div className="h-80 mt-4 flex flex-col items-center justify-center text-muted-foreground border border-dashed border-white/10 rounded-xl">
+        <p className="text-sm">No conversion data available over time.</p>
       </div>
     );
   }
 
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      const dataPoint = payload[0].payload;
-      return (
-        <div className="bg-slate-900 border border-slate-700 p-3 rounded-lg shadow-xl text-sm">
-          <p className="font-semibold text-white mb-1 uppercase text-xs">{label.replace(/_/g, ' ')}</p>
-          <p className="text-emerald-400 font-mono">{dataPoint.count.toLocaleString()} triggers</p>
-          {dataPoint.dropoff > 0 && (
-            <p className="text-red-400 text-xs mt-1">-{dataPoint.dropoff}% drop-off</p>
-          )}
-        </div>
-      );
-    }
-    return null;
+  const colors = ['#5070dd', '#b6d634', '#505372'];
+  
+  const days = data.map(d => d.day);
+  const pageViews = data.map(d => d.page_views);
+  const clicks = data.map(d => d.clicks);
+  const conversions = data.map(d => d.conversions);
+
+  const option = {
+    color: colors,
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'cross' },
+      backgroundColor: '#1e293b',
+      borderColor: '#475569',
+      textStyle: { color: '#f8fafc' },
+    },
+    grid: {
+      right: '25%',
+      left: '10%',
+      top: '15%',
+      bottom: '15%'
+    },
+    legend: {
+      data: ['Page Views', 'Clicks', 'Conversions'],
+      textStyle: { color: '#94a3b8' },
+      top: '0'
+    },
+    xAxis: [
+      {
+        type: 'category',
+        axisTick: { alignWithLabel: true },
+        data: days,
+        axisLabel: { color: '#94a3b8' }
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value',
+        name: 'Page Views',
+        position: 'right',
+        alignTicks: true,
+        axisLine: {
+          show: true,
+          lineStyle: { color: colors[0] }
+        },
+        axisLabel: { formatter: '{value}', color: '#94a3b8' },
+        splitLine: { show: false }
+      },
+      {
+        type: 'value',
+        name: 'Clicks',
+        position: 'right',
+        alignTicks: true,
+        offset: 80,
+        axisLine: {
+          show: true,
+          lineStyle: { color: colors[1] }
+        },
+        axisLabel: { formatter: '{value}', color: '#94a3b8' },
+        splitLine: { show: false }
+      },
+      {
+        type: 'value',
+        name: 'Conversions',
+        position: 'left',
+        alignTicks: true,
+        axisLine: {
+          show: true,
+          lineStyle: { color: colors[2] }
+        },
+        axisLabel: { formatter: '{value}', color: '#94a3b8' },
+        splitLine: { lineStyle: { color: '#334155', type: 'dashed' } }
+      }
+    ],
+    series: [
+      {
+        name: 'Page Views',
+        type: 'bar',
+        data: pageViews
+      },
+      {
+        name: 'Clicks',
+        type: 'bar',
+        yAxisIndex: 1,
+        data: clicks
+      },
+      {
+        name: 'Conversions',
+        type: 'line',
+        yAxisIndex: 2,
+        data: conversions,
+        smooth: true,
+        symbolSize: 8,
+        lineStyle: { width: 3 }
+      }
+    ]
   };
 
   return (
-    <div className="h-64 mt-4">
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} layout="vertical" margin={{ top: 5, right: 30, left: 40, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" horizontal={false} />
-          <XAxis type="number" stroke="#ffffff50" fontSize={12} />
-          <YAxis type="category" dataKey="step" stroke="#ffffff50" fontSize={12} width={100} tickFormatter={(val) => val.replace(/_/g, ' ')} />
-          <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }} />
-          <Bar dataKey="count" radius={[0, 4, 4, 0]}>
-            {data.map((entry, index) => {
-              const colors = ['#00bfff', '#38bdf8', '#818cf8', '#a78bfa'];
-              return <Cell key={`cell-${index}`} fill={colors[index % colors.length]} fillOpacity={0.8} />
-            })}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
+    <div className="h-80 mt-4 w-full">
+      <ReactECharts 
+        option={option} 
+        style={{ height: '100%', width: '100%' }}
+        opts={{ renderer: 'svg' }}
+      />
     </div>
   );
 };

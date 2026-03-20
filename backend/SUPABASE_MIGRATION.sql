@@ -139,3 +139,28 @@ FROM events
 WHERE event_type = 'page_view'
 GROUP BY site_id, COALESCE(metadata->>'page', 'Unknown')
 ORDER BY visits DESC;
+
+-- Hourly Top Events for Bar Race Chart
+CREATE OR REPLACE VIEW v_top_events_hourly AS
+SELECT
+  site_id,
+  event_type,
+  extract(hour from event_timestamp) as hour,
+  COUNT(*) AS total
+FROM events
+GROUP BY site_id, event_type, hour
+ORDER BY hour ASC, total DESC;
+
+-- Conversion Over Time for Multi-Axis Chart
+CREATE OR REPLACE VIEW v_conversion_over_time AS
+SELECT
+  site_id,
+  to_char(event_timestamp, 'Mon DD') AS day,
+  date_trunc('day', event_timestamp) as day_date,
+  COUNT(CASE WHEN event_type = 'page_view' THEN 1 END) AS page_views,
+  COUNT(CASE WHEN event_type = 'click' THEN 1 END) AS clicks,
+  COUNT(CASE WHEN event_type = 'form_submit' THEN 1 END) AS conversions
+FROM events
+GROUP BY site_id, day, day_date
+ORDER BY day_date ASC
+LIMIT 30;

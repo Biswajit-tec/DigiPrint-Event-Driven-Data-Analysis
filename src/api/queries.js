@@ -719,6 +719,23 @@ export async function fetchTopPages(siteIds) {
   }
 }
 
+export async function fetchTopEventsHourly(siteIds) {
+  if (!Array.isArray(siteIds) || siteIds.length === 0) return [];
+
+  try {
+    const { data, error } = await supabase
+      .from('v_top_events_hourly')
+      .select('*')
+      .in('site_id', siteIds);
+    
+    if (error) throw error;
+    return data || [];
+  } catch (err) {
+    console.error('fetchTopEventsHourly error:', err);
+    return [];
+  }
+}
+
 export async function fetchTopEvents(siteIds) {
   if (!Array.isArray(siteIds) || siteIds.length === 0) return [];
 
@@ -891,6 +908,22 @@ export async function fetchDeviceAnalytics(siteIds, range = '24h') {
   } catch (err) {
     console.error('fetchDeviceAnalytics error:', err);
     return { browsers: [], screens: [] };
+  }
+}
+
+export async function fetchConversionOverTime(siteIds) {
+  if (!Array.isArray(siteIds) || siteIds.length === 0) return [];
+
+  try {
+    const { data, error } = await supabase
+      .from('v_conversion_over_time')
+      .select('*')
+      .in('site_id', siteIds);
+    if (error) throw error;
+    return data || [];
+  } catch (err) {
+    console.error('fetchConversionOverTime error:', err);
+    return [];
   }
 }
 
