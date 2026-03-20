@@ -6,7 +6,18 @@ import {
   fetchEventFrequency,
   fetchPeakActivity,
   fetchSiteBehavior,
+  fetchUserSites,
+  fetchTopEvents,
+  fetchFunnelData,
+  fetchSessionDistribution,
+  fetchDeviceBrowser,
+  fetchTopPages,
 } from '../api/queries';
+import TopEventsBreakdown from '../components/dashboard/TopEventsBreakdown';
+import ConversionFunnelChart from '../components/dashboard/ConversionFunnelChart';
+import SessionDurationChart from '../components/dashboard/SessionDurationChart';
+import DeviceBrowserChart from '../components/dashboard/DeviceBrowserChart';
+import TopPagesChart from '../components/dashboard/TopPagesChart';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts/lib/echarts';
@@ -15,6 +26,14 @@ const Analytics = () => {
     const [frequency, setFrequency] = useState([]);
     const [peakTimes, setPeakTimes] = useState([]);
     const [userBehavior, setUserBehavior] = useState([]);
+    
+    // New Advanced Analytics State
+    const [topEventsBreakdown, setTopEventsBreakdown] = useState([]);
+    const [funnelData, setFunnelData] = useState([]);
+    const [sessionDistribution, setSessionDistribution] = useState([]);
+    const [deviceBrowser, setDeviceBrowser] = useState([]);
+    const [topPages, setTopPages] = useState([]);
+
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -25,15 +44,28 @@ const Analytics = () => {
         try {
             setLoading(true);
 
+            const sites = await fetchUserSites();
+            const siteIds = sites.map(s => s.id);
+
             const results = await Promise.allSettled([
                 fetchEventFrequency(),
                 fetchPeakActivity(),
                 fetchSiteBehavior(),
+                fetchTopEvents(siteIds),
+                fetchFunnelData(siteIds),
+                fetchSessionDistribution(siteIds),
+                fetchDeviceBrowser(siteIds),
+                fetchTopPages(siteIds),
             ]);
 
             setFrequency(results[0].status === 'fulfilled' ? results[0].value : []);
             setPeakTimes(results[1].status === 'fulfilled' ? results[1].value : []);
             setUserBehavior(results[2].status === 'fulfilled' ? results[2].value : []);
+            setTopEventsBreakdown(results[3].status === 'fulfilled' ? results[3].value : []);
+            setFunnelData(results[4].status === 'fulfilled' ? results[4].value : []);
+            setSessionDistribution(results[5].status === 'fulfilled' ? results[5].value : []);
+            setDeviceBrowser(results[6].status === 'fulfilled' ? results[6].value : []);
+            setTopPages(results[7].status === 'fulfilled' ? results[7].value : []);
         } catch (error) {
             console.error('Failed to fetch analytics:', error);
         } finally {
@@ -230,6 +262,37 @@ const Analytics = () => {
                         </table>
                     </div>
                 </GlassCard>
+
+                {/* Advanced Analytics Grid */}
+                <div className="grid lg:grid-cols-2 gap-8 mt-8">
+                    <GlassCard>
+                        <h2 className="text-2xl font-semibold mb-6">Top Events</h2>
+                        <TopEventsBreakdown data={topEventsBreakdown} />
+                    </GlassCard>
+                    
+                    <GlassCard>
+                        <h2 className="text-2xl font-semibold mb-6">Conversion Funnel</h2>
+                        <ConversionFunnelChart data={funnelData} />
+                    </GlassCard>
+
+                    <GlassCard>
+                        <h2 className="text-2xl font-semibold mb-6">Session Durations</h2>
+                        <SessionDurationChart data={sessionDistribution} />
+                    </GlassCard>
+
+                    <GlassCard>
+                        <h2 className="text-2xl font-semibold mb-6">Device & Browser</h2>
+                        <DeviceBrowserChart data={deviceBrowser} />
+                    </GlassCard>
+                </div>
+
+                {/* Top Pages Table Block */}
+                <div className="mt-8">
+                    <GlassCard>
+                        <h2 className="text-2xl font-semibold mb-6">Top Pages</h2>
+                        <TopPagesChart data={topPages} />
+                    </GlassCard>
+                </div>
             </div>
         </motion.div>
     );

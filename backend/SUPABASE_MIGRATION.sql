@@ -81,3 +81,61 @@ SELECT site_id, extract(hour from event_timestamp) as peak_hour, count(id) as ev
 FROM events
 GROUP BY site_id, peak_hour
 ORDER BY event_count DESC;
+
+-- Advanced Analytics Views
+
+CREATE OR REPLACE VIEW v_top_events AS
+SELECT
+  site_id,
+  event_type,
+  COUNT(*) AS total
+FROM events
+GROUP BY site_id, event_type
+ORDER BY total DESC;
+
+CREATE OR REPLACE VIEW v_conversion_funnel AS
+SELECT
+  site_id,
+  COUNT(CASE WHEN event_type = 'page_view' THEN 1 END) AS page_views,
+  COUNT(CASE WHEN event_type = 'click' THEN 1 END) AS clicks,
+  COUNT(CASE WHEN event_type = 'form_submit' THEN 1 END) AS conversions
+FROM events
+GROUP BY site_id;
+
+CREATE OR REPLACE VIEW v_session_distribution AS
+SELECT
+  site_id,
+  CASE
+    WHEN duration_seconds < 30 THEN '0-30s'
+    WHEN duration_seconds < 60 THEN '30-60s'
+    WHEN duration_seconds < 300 THEN '1-5min'
+    ELSE '5min+'
+  END AS duration_bucket,
+  COUNT(*) AS sessions
+FROM sessions
+WHERE duration_seconds IS NOT NULL
+GROUP BY site_id,
+  CASE
+    WHEN duration_seconds < 30 THEN '0-30s'
+    WHEN duration_seconds < 60 THEN '30-60s'
+    WHEN duration_seconds < 300 THEN '1-5min'
+    ELSE '5min+'
+  END;
+
+CREATE OR REPLACE VIEW v_device_browser AS
+SELECT
+  site_id,
+  COALESCE(metadata->>'browser', 'Unknown') AS browser,
+  COUNT(DISTINCT session_id) AS users
+FROM events
+GROUP BY site_id, COALESCE(metadata->>'browser', 'Unknown');
+
+CREATE OR REPLACE VIEW v_top_pages AS
+SELECT
+  site_id,
+  COALESCE(metadata->>'page', 'Unknown') AS page,
+  COUNT(*) AS visits
+FROM events
+WHERE event_type = 'page_view'
+GROUP BY site_id, COALESCE(metadata->>'page', 'Unknown')
+ORDER BY visits DESC;

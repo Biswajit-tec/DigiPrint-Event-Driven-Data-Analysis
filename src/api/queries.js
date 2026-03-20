@@ -701,35 +701,97 @@ export async function fetchEventsOverTime(siteIds, range = '24h') {
   }
 }
 
-export async function fetchTopPages(siteIds, range = '24h') {
+export async function fetchTopPages(siteIds) {
   if (!Array.isArray(siteIds) || siteIds.length === 0) return [];
 
   try {
-    let query = supabase
-      .from('events')
-      .select('event_type, event_timestamp, metadata')
+    const { data, error } = await supabase
+      .from('v_top_pages')
+      .select('*')
       .in('site_id', siteIds)
-      .eq('event_type', 'page_view')
-      .limit(12000);
-    query = applyTimeFilter(query, 'event_timestamp', { range });
-    const { data, error } = await query;
+      .limit(10);
+    
     if (error) throw error;
-
-    const counts = {};
-    (data || []).forEach((row) => {
-      const page = row.metadata?.page || '/';
-      counts[page] = (counts[page] || 0) + 1;
-    });
-
-    return Object.entries(counts)
-      .map(([page, visits]) => ({ page, visits }))
-      .sort((a, b) => b.visits - a.visits)
-      .slice(0, 10);
+    return data || [];
   } catch (err) {
     console.error('fetchTopPages error:', err);
     return [];
   }
 }
+
+export async function fetchTopEvents(siteIds) {
+  if (!Array.isArray(siteIds) || siteIds.length === 0) return [];
+
+  try {
+    const { data, error } = await supabase
+      .from('v_top_events')
+      .select('*')
+      .in('site_id', siteIds)
+      .limit(10);
+    
+    if (error) throw error;
+    return data || [];
+  } catch (err) {
+    console.error('fetchTopEvents error:', err);
+    return [];
+  }
+}
+
+export async function fetchSessionDistribution(siteIds) {
+  if (!Array.isArray(siteIds) || siteIds.length === 0) return [];
+
+  try {
+    // The view groups by site_id and duration_bucket
+    const { data, error } = await supabase
+      .from('v_session_distribution')
+      .select('duration_bucket, sessions')
+      .in('site_id', siteIds);
+    
+    if (error) throw error;
+
+    // Aggregate further in case multiple sites are selected
+    const aggregated = {};
+    (data || []).forEach(row => {
+      aggregated[row.duration_bucket] = (aggregated[row.duration_bucket] || 0) + Number(row.sessions || 0);
+    });
+    
+    return Object.entries(aggregated).map(([bucket, count]) => ({
+      duration_bucket: bucket,
+      sessions: count
+    }));
+  } catch (err) {
+    console.error('fetchSessionDistribution error:', err);
+    return [];
+  }
+}
+
+export async function fetchDeviceBrowser(siteIds) {
+  if (!Array.isArray(siteIds) || siteIds.length === 0) return [];
+
+  try {
+    const { data, error } = await supabase
+      .from('v_device_browser')
+      .select('browser, users')
+      .in('site_id', siteIds);
+    
+    if (error) throw error;
+
+    // Aggregate by browser across selected sites
+    const aggregated = {};
+    (data || []).forEach(row => {
+      const browser = row.browser || 'Unknown';
+      aggregated[browser] = (aggregated[browser] || 0) + Number(row.users || 0);
+    });
+
+    return Object.entries(aggregated)
+      .map(([browser, users]) => ({ browser, users }))
+      .sort((a, b) => b.users - a.users);
+  } catch (err) {
+    console.error('fetchDeviceBrowser error:', err);
+    return [];
+  }
+}
+
 
 export async function fetchScrollDepth(siteIds, range = '24h') {
   const defaultSeries = [25, 50, 75, 100].map((milestone) => ({
@@ -832,63 +894,35 @@ export async function fetchDeviceAnalytics(siteIds, range = '24h') {
   }
 }
 
-export async function fetchFunnelData(siteIds, range = '24h') {
+export async function fetchFunnelData(siteIds) {
   const empty = [
-    { step: 'page_view', count: 0, dropoff: 0 },
-    { step: 'click', count: 0, dropoff: 0 },
-    { step: 'form_submit', count: 0, dropoff: 0 },
-    { step: 'conversion', count: 0, dropoff: 0 },
+    { step: 'page_views', count: 0, dropoff: 0 },
+    { step: 'clicks', count: 0, dropoff: 0 },
+    { step: 'conversions', count: 0, dropoff: 0 },
   ];
   if (!Array.isArray(siteIds) || siteIds.length === 0) return empty;
 
   try {
-    let query = supabase
-      .from('events')
-      .select('session_id, event_type, event_timestamp')
-      .in('site_id', siteIds)
-      .limit(20000);
-    query = applyTimeFilter(query, 'event_timestamp', { range });
-    const { data, error } = await query;
+    const { data, error } = await supabase
+      .from('v_conversion_funnel')
+      .select('*')
+      .in('site_id', siteIds);
     if (error) throw error;
 
-    const conversionTypes = new Set(['conversion', 'signup', 'purchase', 'checkout_complete']);
-    const stepsBySession = new Map();
+    let pageViews = 0;
+    let clicks = 0;
+    let conversions = 0;
 
-    (data || []).forEach((row) => {
-      if (!row.session_id) return;
-      const existing = stepsBySession.get(row.session_id) || {
-        page_view: false,
-        click: false,
-        form_submit: false,
-        conversion: false,
-      };
-      if (row.event_type === 'page_view') existing.page_view = true;
-      if (row.event_type === 'click') existing.click = true;
-      if (row.event_type === 'form_submit') {
-        existing.form_submit = true;
-        existing.conversion = true; // fallback conversion signal
-      }
-      if (conversionTypes.has(row.event_type)) existing.conversion = true;
-      stepsBySession.set(row.session_id, existing);
-    });
-
-    let pageView = 0;
-    let click = 0;
-    let formSubmit = 0;
-    let conversion = 0;
-
-    stepsBySession.forEach((steps) => {
-      if (steps.page_view) pageView += 1;
-      if (steps.page_view && steps.click) click += 1;
-      if (steps.page_view && steps.click && steps.form_submit) formSubmit += 1;
-      if (steps.page_view && steps.click && steps.form_submit && steps.conversion) conversion += 1;
+    (data || []).forEach(row => {
+      pageViews += Number(row.page_views || 0);
+      clicks += Number(row.clicks || 0);
+      conversions += Number(row.conversions || 0);
     });
 
     const sequence = [
-      { step: 'page_view', count: pageView },
-      { step: 'click', count: click },
-      { step: 'form_submit', count: formSubmit },
-      { step: 'conversion', count: conversion },
+      { step: 'page_views', count: pageViews },
+      { step: 'clicks', count: clicks },
+      { step: 'conversions', count: conversions },
     ];
 
     return sequence.map((row, idx) => {
